@@ -5,7 +5,7 @@ import java.net.Socket;
 
 public class Client {
     public static void main(String[] args) throws IOException {
-        String host = "";
+        String host = "localhost";
         int port = 12345;
 
         try(Socket socket = new Socket(host, port)) {
@@ -14,7 +14,13 @@ public class Client {
             InputStream input = socket.getInputStream();
             BufferedReader reader = new BufferedReader(new InputStreamReader(input));
 
+            writer.println("Działa.");
 
+            String response = reader.readLine();
+            System.out.println("Rsponse: " + response);
+        }
+        catch(IOException e){
+            e.printStackTrace();
         }
     }
 }
