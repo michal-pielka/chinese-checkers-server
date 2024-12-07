@@ -1,5 +1,7 @@
 package org.example.Server;
 
+import org.example.MyThread.MyThread;
+
 import java.io.*;
 import java.net.ServerSocket;
 import java.io.IOException;
@@ -13,21 +15,8 @@ public class Server {
 
             while(true) {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("Connected client: " + clientSocket.getInetAddress());
-
-                InputStream input = clientSocket.getInputStream();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(input));
-                OutputStream output = clientSocket.getOutputStream();
-                PrintWriter writer = new PrintWriter(output, true);
-
-                String message = reader.readLine();
-                System.out.println(message);
-
-                String response = "Spoko.";
-                writer.println(response);
-
-                clientSocket.close();
-                System.out.println("Connection closed.");
+                MyThread thread = new MyThread(clientSocket);
+                thread.start();
             }
         }
         catch(IOException e) {
