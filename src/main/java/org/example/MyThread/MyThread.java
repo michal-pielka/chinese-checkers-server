@@ -23,11 +23,21 @@ public class MyThread extends Thread{
             writer.println("create LOBBY_NAME MAX_PLAYER_SIZE");
             writer.println("join LOBBY_NAME");
 
-            String message;
-            message = reader.readLine();
-            System.out.println(message);
+            String line;
+            line = reader.readLine();
+            String[] message = line.split(" ");
+            if(message.length == 1 && message[0].equalsIgnoreCase("create")) {
 
+            }
+            else if(message.length == 2 && message[0].equalsIgnoreCase("join")){
 
+            }
+            else if(message.length == 3 && message[0].equalsIgnoreCase("create")){
+
+            }
+            else {
+
+            }
         }
         catch(IOException e) {
             e.printStackTrace();
