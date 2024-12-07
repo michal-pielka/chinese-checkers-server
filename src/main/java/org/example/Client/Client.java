@@ -1,26 +1,133 @@
 package org.example.Client;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
 
+/**
+ * A client program that connects to the server, sends commands, and displays server responses.
+ */
 public class Client {
-    public static void main(String[] args) throws IOException {
-        String host = "localhost";
-        int port = 12345;
+    private Socket socket;
+    private Scanner inputReader;
+    private PrintWriter outputWriter;
+    private Scanner userInputScanner;
 
-        try(Socket socket = new Socket(host, port)) {
-            OutputStream output = socket.getOutputStream();
-            PrintWriter writer = new PrintWriter(output, true);
-            InputStream input = socket.getInputStream();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(input));
+    public Client(String host, int port) throws IOException {
+        initializeSocket(host, port);
+        initializeStreams();
+    }
 
-            writer.println("Działa.");
+    /**
+     * Initializes the socket connection to the server.
+     */
+    private void initializeSocket(String host, int port) throws IOException {
+        try {
+            socket = new Socket(host, port);
+            System.out.println("Connected to the server at " + host + ":" + port);
 
-            String response = reader.readLine();
-            System.out.println("Rsponse: " + response);
+        } catch (IOException e) {
+            System.err.println("Unable to connect to the server: " + e.getMessage());
+            throw e;
         }
-        catch(IOException e){
-            e.printStackTrace();
+    }
+
+    /**
+     * Initializes the input and output streams for communication with the server.
+     */
+    private void initializeStreams() throws IOException {
+        try {
+            inputReader = new Scanner(socket.getInputStream());
+            outputWriter = new PrintWriter(socket.getOutputStream(), true);
+            userInputScanner = new Scanner(System.in);
+
+        } catch (IOException e) {
+            System.err.println("Error initializing I/O streams: " + e.getMessage());
+            throw e;
+        }
+    }
+
+    /**
+     * Starts the client by initiating the listener thread and handling user input.
+     */
+    public void start() {
+        // Start a thread to listen for messages from the server
+        new Thread(new ServerListener()).start();
+
+        // Main thread handles user input and sends commands to the server
+        handleUserInput();
+    }
+
+    /**
+     * Continuously reads user input and sends it to the server.
+     */
+    private void handleUserInput() {
+        try {
+            while (true) {
+                if (userInputScanner.hasNextLine()) {
+                    String userCommand = userInputScanner.nextLine();
+                    outputWriter.println(userCommand);
+
+                } else {
+                    break; // Exit if no more input
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Error handling user input: " + e.getMessage());
+
+        } finally {
+            closeConnections();
+        }
+    }
+
+    /**
+     * Closes all connections and streams gracefully.
+     */
+    private void closeConnections() {
+        try {
+            if (socket != null && !socket.isClosed()) {
+                socket.close();
+            }
+
+            if (userInputScanner != null) {
+                userInputScanner.close();
+            }
+
+            if (inputReader != null) {
+                inputReader.close();
+            }
+
+            if (outputWriter != null) {
+                outputWriter.close();
+            }
+
+            System.out.println("Disconnected from the server.");
+
+        } catch (IOException e) {
+            System.err.println("Error closing connections: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Inner class that listens for messages from the server and displays them.
+     */
+    private class ServerListener implements Runnable {
+        @Override
+        public void run() {
+            try {
+                while (inputReader.hasNextLine()) {
+                    String serverMessage = inputReader.nextLine();
+                    System.out.println(serverMessage);
+                }
+
+            } catch (Exception e) {
+                System.err.println("Connection to server lost: " + e.getMessage());
+
+            } finally {
+                closeConnections();
+            }
         }
     }
 }
