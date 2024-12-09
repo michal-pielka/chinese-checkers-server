@@ -12,7 +12,7 @@ public class GameStart implements GameState{
         Random random = new Random();
         int startingPlayer = random.nextInt(game.getMaxPlayers());
         game.setCurrentPlayer(startingPlayer);
-        game.broadcastMessage("Rozpoczyna gracz: " + startingPlayer + " " + game.getPlayers().get(startingPlayer).getName());
+        game.broadcastMessage("Rozpoczyna gracz: " + (startingPlayer+1) + " " + game.getPlayers().get(startingPlayer).getName());
         game.setState(new GameOn());
     }
 

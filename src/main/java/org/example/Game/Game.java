@@ -43,6 +43,10 @@ public class Game {
         this.state = state;
     }
 
+    public GameState getState() {
+        return state;
+    }
+
     public void addPlayer(Player player) {
         state.addPlayer(this, player);
     }

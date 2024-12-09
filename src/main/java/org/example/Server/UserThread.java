@@ -110,12 +110,6 @@ public class UserThread implements Runnable {
         while(name == null) {
             outputWriter.println("Input your lobby name.");
             name = inputReader.nextLine().trim().toLowerCase();
-            for(Game game : games) {
-                if(game.getLobbyName().equals(name)) {
-                    outputWriter.println("Lobby with that name already exist.");
-                    name = null;
-                }
-            }
         }
         return name;
     }

@@ -10,6 +10,7 @@ public class WaitingForPlayers implements GameState {
         if(game.getPlayers().size() == game.getMaxPlayers()) {
             game.broadcastMessage("Game full. Lets start.");
             game.setState(new GameStart());
+            game.getState().handle(game);
         }
         else {
             game.broadcastMessage("Waiting for players. Player count: " + game.getPlayers().size());
