@@ -1,8 +1,14 @@
 package org.example.Server;
 
+import org.example.Game.Game;
+import org.example.Game.Player;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -12,14 +18,15 @@ public class UserThread implements Runnable {
     private Socket socket;
     private Scanner inputReader;
     private PrintWriter outputWriter;
-
+    private List<Game> games;
     /**
      * Constructor to initialize client socket.
      *
      * @param socket The client socket.
      */
-    public UserThread(Socket socket) {
+    public UserThread(Socket socket, ArrayList<Game> games) {
         this.socket = socket;
+        this.games = Collections.synchronizedList(games);
         try {
             initializeStreams();
         } catch (IOException e) {
@@ -58,6 +65,10 @@ public class UserThread implements Runnable {
         outputWriter.println("You chose to join a game.");
         outputWriter.flush();
         // TODO: Implement join logic here d
+        String playerName = askForPlayerName();
+        Player player = new Player(playerName, outputWriter);
+        Game game = findGame();
+        game.addPlayer(player);
     }
 
     /**
@@ -67,6 +78,65 @@ public class UserThread implements Runnable {
         outputWriter.println("You chose to create a game.");
         outputWriter.flush();
         // TODO: Implement create logic here d
+        String lobbyName = askForLobbyName();
+        int maxPLayers = askForNumberOfPlayers();
+        Game game = new Game(lobbyName, maxPLayers);
+        synchronized(games) {
+            games.add(game);
+        }
+        String playerName = askForPlayerName();
+        Player player = new Player(playerName, outputWriter);
+        game.addPlayer(player);
+    }
+
+    private Game findGame() {
+        String lobbyName;
+
+        while(true) {
+            lobbyName = askForLobbyName();
+            synchronized (games) {
+                for (Game game2 : games) {
+                    if (game2.getLobbyName().equals(lobbyName)) {
+                        return game2;
+                    }
+                }
+            }
+            outputWriter.println("Cannot find game. Try again.");
+        }
+    }
+
+    private String askForLobbyName() {
+        String name = null;
+        while(name == null) {
+            outputWriter.println("Input your lobby name.");
+            name = inputReader.nextLine().trim().toLowerCase();
+        }
+        return name;
+    }
+
+    private int askForNumberOfPlayers() {
+        int number=0;
+        String response;
+        while(number!= 2 && number!=3 && number!=4 && number!=6) {
+            outputWriter.println("Input number of players.");
+            response = inputReader.nextLine().trim().toLowerCase();
+            try{
+                number = Integer.parseInt(response);
+            }
+            catch(NumberFormatException e) {
+                outputWriter.println("Invalid number of players.");
+            }
+        }
+        return number;
+    }
+
+    private String askForPlayerName() {
+        String name = null;
+        while(name == null) {
+            outputWriter.println("Input your player name.");
+            name = inputReader.nextLine().trim();
+        }
+        return name;
     }
 
     @Override
