@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9c22d801-bd1c-4d3a-90a8-d31f76062691" name="Changes" comment="create/join update">
+    <list default="true" id="9c22d801-bd1c-4d3a-90a8-d31f76062691" name="Changes" comment="test branch">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/WaitingForPlayers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/WaitingForPlayers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server/UserThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/UserThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Server/Server.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Server/UserThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Server/UserThread.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,19 +55,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Client.executor&quot;: &quot;Run&quot;,
-    &quot;Application.RunClient.executor&quot;: &quot;Run&quot;,
-    &quot;Application.RunServer.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Server.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;wit&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/admin/Desktop/sem3-TP/Lista3/state&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Client.executor": "Run",
+    "Application.RunClient.executor": "Run",
+    "Application.RunServer.executor": "Run",
+    "Application.Server.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "michal",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/admin/Desktop/sem3-TP/Lista3/state",
+    "node.js.selected.package.tslint": "(autodetect)"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
@@ -167,7 +170,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="test branch" />
     <MESSAGE value="test server" />
     <MESSAGE value="test client" />
     <MESSAGE value="commit my thread 1" />
@@ -175,6 +177,7 @@
     <MESSAGE value="main 0.1" />
     <MESSAGE value="wit 0.1" />
     <MESSAGE value="create/join update" />
-    <option name="LAST_COMMIT_MESSAGE" value="create/join update" />
+    <MESSAGE value="test branch" />
+    <option name="LAST_COMMIT_MESSAGE" value="test branch" />
   </component>
 </project>

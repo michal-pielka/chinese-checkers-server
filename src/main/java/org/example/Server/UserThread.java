@@ -6,7 +6,6 @@ import org.example.Game.Player;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -18,15 +17,18 @@ public class UserThread implements Runnable {
     private Socket socket;
     private Scanner inputReader;
     private PrintWriter outputWriter;
-    private List<Game> games;
+    private Server server;
+
     /**
-     * Constructor to initialize client socket.
+     * Constructor to initialize client socket and server reference.
      *
      * @param socket The client socket.
+     * @param server The server instance managing games.
      */
-    public UserThread(Socket socket, ArrayList<Game> games) {
+    public UserThread(Socket socket, Server server) {
         this.socket = socket;
-        this.games = Collections.synchronizedList(games);
+        this.server = server;
+
         try {
             initializeStreams();
         } catch (IOException e) {
@@ -54,7 +56,7 @@ public class UserThread implements Runnable {
      * Sends the start menu to the client.
      */
     private void displayStartMenu() {
-        outputWriter.println("Use one of the following: join, create");
+        outputWriter.println("Welcome! Use one of the following commands: join, create, list, quit");
         outputWriter.flush(); // Ensure all messages are sent immediately
     }
 
@@ -64,11 +66,28 @@ public class UserThread implements Runnable {
     private void handleJoin() {
         outputWriter.println("You chose to join a game.");
         outputWriter.flush();
-        // TODO: Implement join logic here d
+
         String playerName = askForPlayerName();
         Player player = new Player(playerName, outputWriter);
-        Game game = findGame();
-        game.addPlayer(player);
+
+        Game game = null;
+        while (game == null) {
+            String lobbyName = askForLobbyName();
+            game = server.findGameByName(lobbyName);
+            if (game == null) {
+                outputWriter.println("Cannot find game with lobby name '" + lobbyName + "'. Try again.");
+            }
+        }
+
+        synchronized (game) {
+            if (game.getPlayers().size() >= game.getMaxPlayers()) {
+                outputWriter.println("Game '" + game.getLobbyName() + "' is full. Choose another game.");
+                return;
+            }
+            game.addPlayer(player);
+            outputWriter.println("Successfully joined game '" + game.getLobbyName() + "'.");
+            game.broadcastMessage(player.getName() + " has joined the game.");
+        }
     }
 
     /**
@@ -77,64 +96,108 @@ public class UserThread implements Runnable {
     private void handleCreate() {
         outputWriter.println("You chose to create a game.");
         outputWriter.flush();
-        // TODO: Implement create logic here d
+
         String lobbyName = askForLobbyName();
-        int maxPLayers = askForNumberOfPlayers();
-        Game game = new Game(lobbyName, maxPLayers);
-        synchronized(games) {
-            games.add(game);
+        if (server.findGameByName(lobbyName) != null) {
+            outputWriter.println("A game with lobby name '" + lobbyName + "' already exists. Try a different name.");
+            return;
         }
+
+        int maxPlayers = askForNumberOfPlayers();
+        Game game = new Game(lobbyName, maxPlayers);
+
+        server.addGame(game);
+
         String playerName = askForPlayerName();
         Player player = new Player(playerName, outputWriter);
         game.addPlayer(player);
+
+        outputWriter.println("Game '" + lobbyName + "' created successfully with " + maxPlayers + " players.");
     }
 
-    private Game findGame() {
-        String lobbyName;
-
-        while(true) {
-            lobbyName = askForLobbyName();
-            synchronized (games) {
-                for (Game game2 : games) {
-                    if (game2.getLobbyName().equals(lobbyName)) {
-                        return game2;
-                    }
-                }
+    /**
+     * Handles the 'list' command to display available games.
+     */
+    private void handleListGames() {
+        List<Game> currentGames = server.getGames();
+        if (currentGames.isEmpty()) {
+            outputWriter.println("No available games to join. You can create one using the 'create' command.");
+        } else {
+            outputWriter.println("Available Games:");
+            for (Game game : currentGames) {
+                outputWriter.println("- " + game.getLobbyName() + " (" + game.getPlayers().size() + "/" + game.getMaxPlayers() + " players)");
             }
-            outputWriter.println("Cannot find game. Try again.");
         }
+    }
+
+    /**
+     * Handles the 'quit' command to disconnect the client.
+     */
+    private void handleQuit() {
+        outputWriter.println("Disconnecting from the server. Goodbye!");
+        closeSocket();
     }
 
     private String askForLobbyName() {
         String name = null;
-        while(name == null) {
-            outputWriter.println("Input your lobby name.");
-            name = inputReader.nextLine().trim().toLowerCase();
+        while (name == null || name.isEmpty()) {
+            outputWriter.println("Please input your lobby name:");
+            if (inputReader.hasNextLine()) {
+                name = inputReader.nextLine().trim();
+                if (name.isEmpty()) {
+                    outputWriter.println("Lobby name cannot be empty.");
+                }
+            } else {
+                name = "default_lobby"; // Fallback
+            }
         }
         return name;
     }
 
+    /**
+     * Asks the client for the number of players.
+     *
+     * @return The valid number of players entered by the client.
+     */
     private int askForNumberOfPlayers() {
-        int number=0;
-        String response;
-        while(number!= 2 && number!=3 && number!=4 && number!=6) {
-            outputWriter.println("Input number of players.");
-            response = inputReader.nextLine().trim().toLowerCase();
-            try{
-                number = Integer.parseInt(response);
-            }
-            catch(NumberFormatException e) {
-                outputWriter.println("Invalid number of players.");
+        int number = 0;
+        while (number != 2 && number != 3 && number != 4 && number != 6) {
+            outputWriter.println("Please input number of players (2, 3, 4, or 6):");
+            if (inputReader.hasNextLine()) {
+                String response = inputReader.nextLine().trim();
+                try {
+                    number = Integer.parseInt(response);
+                    if (number != 2 && number != 3 && number != 4 && number != 6) {
+                        outputWriter.println("Invalid number of players. Choose 2, 3, 4, or 6.");
+                    }
+                } catch (NumberFormatException e) {
+                    outputWriter.println("Invalid input. Please enter a numeric value.");
+                }
+            } else {
+                outputWriter.println("No input detected. Defaulting to 2 players.");
+                number = 2;
             }
         }
         return number;
     }
 
+    /**
+     * Asks the client for their player name.
+     *
+     * @return The player name entered by the client.
+     */
     private String askForPlayerName() {
         String name = null;
-        while(name == null) {
-            outputWriter.println("Input your player name.");
-            name = inputReader.nextLine().trim();
+        while (name == null || name.isEmpty()) {
+            outputWriter.println("Please input your player name:");
+            if (inputReader.hasNextLine()) {
+                name = inputReader.nextLine().trim();
+                if (name.isEmpty()) {
+                    outputWriter.println("Player name cannot be empty.");
+                }
+            } else {
+                name = "Anonymous"; // Fallback
+            }
         }
         return name;
     }
@@ -158,8 +221,16 @@ public class UserThread implements Runnable {
                         handleCreate();
                         break;
 
+                    case "list":
+                        handleListGames();
+                        break;
+
+                    case "quit":
+                        handleQuit();
+                        return; // Exit the run method to terminate the thread
+
                     default:
-                        outputWriter.println("Invalid command. Please enter 'join' or 'create'.");
+                        outputWriter.println("Invalid command. Please enter 'join', 'create', 'list', or 'quit'.");
                         break;
                 }
 
