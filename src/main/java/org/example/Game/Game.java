@@ -7,6 +7,7 @@ import java.util.ArrayList;
 public class Game {
     String lobbyName;
     ArrayList<Player> players;
+    int currentPlayer;
     int maxPlayers;
     Board board;
     GameState state;
@@ -17,10 +18,21 @@ public class Game {
         players = new ArrayList<>();
         board = null; // Do poprawy!!!
         state = new WaitingForPlayers();
+        currentPlayer = -1;
     }
-
+    public String getLobbyName() {
+        return lobbyName;
+    }
     public ArrayList<Player> getPlayers() {
         return players;
+    }
+
+    public int getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void setCurrentPlayer(int i) {
+        this.currentPlayer = i % this.maxPlayers;
     }
 
     public int getMaxPlayers() {
@@ -39,5 +51,18 @@ public class Game {
         for(Player player : players) {
             player.sendMessage(message);
         }
+    }
+
+    public void move(Player player, int startPos, int endPos) {
+        if(players.get(currentPlayer) != player) {
+            player.sendMessage("Not your turn.");
+        }
+        else {
+            state.play(this, startPos, endPos);
+        }
+    }
+
+    public void endTurn() {
+        currentPlayer=(currentPlayer + 1) % maxPlayers;
     }
 }

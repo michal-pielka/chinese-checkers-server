@@ -9,7 +9,7 @@ public class WaitingForPlayers implements GameState {
     public void handle(Game game) {
         if(game.getPlayers().size() == game.getMaxPlayers()) {
             game.broadcastMessage("Game full. Lets start.");
-            game.setState(new GameOn());
+            game.setState(new GameStart());
         }
         else {
             game.broadcastMessage("Waiting for players. Player count: " + game.getPlayers().size());
@@ -20,7 +20,7 @@ public class WaitingForPlayers implements GameState {
     public void addPlayer(Game game, Player player) {
         if(game.getPlayers().size() < game.getMaxPlayers()) {
             game.getPlayers().add(player);
-            game.broadcastMessage("Added new player.");
+            game.broadcastMessage("Added player number " + game.getPlayers().size()+ " " + player.getName());
         }
         else {
             game.broadcastMessage("Game is full, cannot add player.");

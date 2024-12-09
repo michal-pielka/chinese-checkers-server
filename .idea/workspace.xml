@@ -5,17 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9c22d801-bd1c-4d3a-90a8-d31f76062691" name="Changes" comment="wit 0.1">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/Board.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/Game.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/GameOn.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/GameOver.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/GameState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/WaitingForPlayers.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/Player.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/StdBoard.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/GameStart.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/MyThread/MyThread.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/GameOn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/GameOn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/WaitingForPlayers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/WaitingForPlayers.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server/UserThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/UserThread.java" afterDir="false" />
     </list>
@@ -65,6 +60,8 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.Client.executor": "Run",
+    "Application.RunClient.executor": "Run",
+    "Application.RunServer.executor": "Run",
     "Application.Server.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
