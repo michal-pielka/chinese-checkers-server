@@ -81,7 +81,9 @@ public class UserThread implements Runnable {
         String lobbyName = askForLobbyName();
         int maxPLayers = askForNumberOfPlayers();
         Game game = new Game(lobbyName, maxPLayers);
-        games.add(game);
+        synchronized(games) {
+            games.add(game);
+        }
         String playerName = askForPlayerName();
         Player player = new Player(playerName, outputWriter);
         game.addPlayer(player);
@@ -108,6 +110,12 @@ public class UserThread implements Runnable {
         while(name == null) {
             outputWriter.println("Input your lobby name.");
             name = inputReader.nextLine().trim().toLowerCase();
+            for(Game game : games) {
+                if(game.getLobbyName().equals(name)) {
+                    outputWriter.println("Lobby with that name already exist.");
+                    name = null;
+                }
+            }
         }
         return name;
     }
