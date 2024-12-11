@@ -4,11 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9c22d801-bd1c-4d3a-90a8-d31f76062691" name="Changes" comment="test branch">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="9c22d801-bd1c-4d3a-90a8-d31f76062691" name="Changes" comment="create/join update">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/Command.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/CommandRegistry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/CreateCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/JoinCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/ListGamesCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/MoveCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/QuitCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/States/InGameState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/States/LobbyState.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/States/UserState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Client/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Server.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server/UserThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/UserThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Client/Client$ServerListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Client/Client$ServerListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Client/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Client/Client.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/Server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Server/Server.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/Server/UserThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Server/UserThread.class" afterDir="false" />
     </list>
@@ -21,6 +33,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
+        <option value="Python Script" />
         <option value="Class" />
       </list>
     </option>
@@ -39,12 +52,12 @@
     &quot;assignee&quot;: &quot;WiT1t&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/michal-pielka/chinese-checkers-server.git&quot;,
-    &quot;accountId&quot;: &quot;b10251a8-66c2-4b30-9867-8b316c82ec4b&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/michal-pielka/chinese-checkers-server.git",
+    "accountId": "cce54698-5e64-4365-a0da-e1a0eb09442d"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 2
@@ -66,7 +79,11 @@
     "git-widget-placeholder": "michal",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/admin/Desktop/sem3-TP/Lista3/state",
-    "node.js.selected.package.tslint": "(autodetect)"
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager">
@@ -82,6 +99,14 @@
       </method>
     </configuration>
   </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+      </set>
+    </attachedChunks>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -90,6 +115,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1733591585096</updated>
+      <workItem from="1733943474708" duration="3651000" />
     </task>
     <task id="LOCAL-00001" summary="test branch">
       <option name="closed" value="true" />
@@ -155,8 +181,19 @@
       <option name="project" value="LOCAL" />
       <updated>1733750163955</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="create/join update">
+      <option name="closed" value="true" />
+      <created>1733768008223</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1733768008223</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -176,8 +213,8 @@
     <MESSAGE value="commit my thread 1.1" />
     <MESSAGE value="main 0.1" />
     <MESSAGE value="wit 0.1" />
-    <MESSAGE value="create/join update" />
     <MESSAGE value="test branch" />
-    <option name="LAST_COMMIT_MESSAGE" value="test branch" />
+    <MESSAGE value="create/join update" />
+    <option name="LAST_COMMIT_MESSAGE" value="create/join update" />
   </component>
 </project>
