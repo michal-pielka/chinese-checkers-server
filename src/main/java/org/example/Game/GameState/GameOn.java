@@ -17,7 +17,7 @@ public class GameOn implements GameState {
 
     @Override
     public void play(Game game, int startPos, int endPos) {
-        game.broadcastMessage("Moved from: " + startPos + " to : " + endPos);
+        game.broadcastMessage("Moved from " + startPos + " to " + endPos);
         game.endTurn();
         handle(game);
     }
