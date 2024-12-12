@@ -4,24 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9c22d801-bd1c-4d3a-90a8-d31f76062691" name="Changes" comment="create/join update">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/Command.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/CommandRegistry.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/CreateCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/JoinCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/ListGamesCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/MoveCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/QuitCommand.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/States/InGameState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/States/LobbyState.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/States/UserState.java" afterDir="false" />
+    <list default="true" id="a2ab4cab-57cd-4b73-b25e-6d92a750d9f9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/GameOn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/GameOn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/GameStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/GameStart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/CommandRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/CommandRegistry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/MoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/MoveCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server/States/InGameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/States/InGameState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server/UserThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/UserThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Client/Client$ServerListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Client/Client$ServerListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Client/Client.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Client/Client.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Server/Server.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Server/Server.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Game/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Game/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Game/GameState/GameOn.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Game/GameState/GameOn.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Game/GameState/GameStart.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Game/GameState/GameStart.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Game/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Game/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Server/Commands/CommandRegistry.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Server/Commands/CommandRegistry.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Server/Commands/MoveCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Server/Commands/MoveCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Server/States/InGameState.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Server/States/InGameState.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/org/example/Server/UserThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Server/UserThread.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -29,192 +30,62 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Interface" />
-        <option value="Python Script" />
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="michal" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;WiT1t&quot;
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "WiT1t"
   }
-}</component>
+}]]></component>
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/michal-pielka/chinese-checkers-server.git",
-    "accountId": "cce54698-5e64-4365-a0da-e1a0eb09442d"
+    "accountId": "b10251a8-66c2-4b30-9867-8b316c82ec4b"
   }
 }]]></component>
-  <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 2
-}</component>
-  <component name="ProjectId" id="2pti4o9MBsi1f019HnnZN1qt2aB" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="2q7U4Otekqo3qBmcrGwDzTf3pGL" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.Client.executor": "Run",
     "Application.RunClient.executor": "Run",
     "Application.RunServer.executor": "Run",
-    "Application.Server.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "michal",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/admin/Desktop/sem3-TP/Lista3/state",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+    "git-widget-placeholder": "wit",
+    "kotlin-language-version-configured": "true"
   }
 }]]></component>
   <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
+    <configuration name="test" type="Application" factoryName="Application" singleton="false">
+      <option name="MAIN_CLASS_NAME" value="org.example.Client.RunClient" />
+      <module name="ChineseCheckers" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
-        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="9c22d801-bd1c-4d3a-90a8-d31f76062691" name="Changes" comment="" />
-      <created>1733591585096</created>
+      <changelist id="a2ab4cab-57cd-4b73-b25e-6d92a750d9f9" name="Changes" comment="" />
+      <created>1734012917885</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1733591585096</updated>
-      <workItem from="1733943474708" duration="3651000" />
+      <updated>1734012917885</updated>
     </task>
-    <task id="LOCAL-00001" summary="test branch">
-      <option name="closed" value="true" />
-      <created>1733591754358</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1733591754358</updated>
-    </task>
-    <task id="LOCAL-00002" summary="test server">
-      <option name="closed" value="true" />
-      <created>1733594737563</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1733594737563</updated>
-    </task>
-    <task id="LOCAL-00003" summary="test client">
-      <option name="closed" value="true" />
-      <created>1733594980662</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1733594980662</updated>
-    </task>
-    <task id="LOCAL-00004" summary="commit my thread 1">
-      <option name="closed" value="true" />
-      <created>1733598103256</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1733598103256</updated>
-    </task>
-    <task id="LOCAL-00005" summary="commit my thread 1.1">
-      <option name="closed" value="true" />
-      <created>1733598440689</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1733598440689</updated>
-    </task>
-    <task id="LOCAL-00006" summary="main 0.1">
-      <option name="closed" value="true" />
-      <created>1733601439745</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1733601439745</updated>
-    </task>
-    <task id="LOCAL-00007" summary="create/join update">
-      <option name="closed" value="true" />
-      <created>1733729425583</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1733729425583</updated>
-    </task>
-    <task id="LOCAL-00008" summary="create/join update">
-      <option name="closed" value="true" />
-      <created>1733750163955</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1733750163955</updated>
-    </task>
-    <task id="LOCAL-00009" summary="create/join update">
-      <option name="closed" value="true" />
-      <created>1733768008223</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1733768008223</updated>
-    </task>
-    <option name="localTasksCounter" value="10" />
     <servers />
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="test server" />
-    <MESSAGE value="test client" />
-    <MESSAGE value="commit my thread 1" />
-    <MESSAGE value="commit my thread 1.1" />
-    <MESSAGE value="main 0.1" />
-    <MESSAGE value="wit 0.1" />
-    <MESSAGE value="test branch" />
-    <MESSAGE value="create/join update" />
-    <option name="LAST_COMMIT_MESSAGE" value="create/join update" />
   </component>
 </project>

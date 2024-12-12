@@ -18,7 +18,7 @@ public class Game {
         players = new ArrayList<>();
         board = null; // Do poprawy!!!
         state = new WaitingForPlayers();
-        currentPlayer = -1;
+        currentPlayer = 0;
     }
     public String getLobbyName() {
         return lobbyName;

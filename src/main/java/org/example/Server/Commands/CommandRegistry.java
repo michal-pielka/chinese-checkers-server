@@ -12,7 +12,7 @@ public class CommandRegistry {
         register("create", new CreateCommand());
         register("list", new ListGamesCommand());
         register("quit", new QuitCommand());
-        // Add more commands as needed
+        register("move", new MoveCommand());
     }
 
     public void register(String commandName, Command command) {

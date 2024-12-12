@@ -20,6 +20,7 @@ public class UserThread implements Runnable {
     private PrintWriter outputWriter;
     private Server server;
     private UserState state;
+    private Player player;
 
     /**
      * Constructor to initialize client socket and server reference.
@@ -39,6 +40,7 @@ public class UserThread implements Runnable {
             System.err.println("Error initializing I/O streams for client " + socket + ": " + e.getMessage());
             closeSocket();
         }
+        this.player = new Player("defaultName", outputWriter);
     }
 
     /**
@@ -113,7 +115,7 @@ public class UserThread implements Runnable {
         sendMessage("You chose to join a game.");
 
         String playerName = askForPlayerName();
-        Player player = new Player(playerName, outputWriter);
+        player.setName(playerName);
 
         Game game = null;
         while (game == null) {
@@ -131,11 +133,12 @@ public class UserThread implements Runnable {
             }
 
             game.addPlayer(player);
-            sendMessage("Successfully joined game '" + game.getLobbyName() + "'.");
+            //sendMessage("Successfully joined game '" + game.getLobbyName() + "'.");
             game.broadcastMessage(player.getName() + " has joined the game.");
 
             // Transition to InGameState
-            setState(new InGameState());
+            InGameState inGameState = new InGameState(game);
+            setState(inGameState);
         }
     }
 
@@ -154,13 +157,14 @@ public class UserThread implements Runnable {
         server.addGame(game);
 
         String playerName = askForPlayerName();
-        Player player = new Player(playerName, outputWriter);
+        player.setName(playerName);
         game.addPlayer(player);
 
-        sendMessage("Game '" + lobbyName + "' created successfully with " + maxPlayers + " players.");
+        //sendMessage("Game '" + lobbyName + "' created successfully with " + maxPlayers + " players.");
 
         // Transition to InGameState
-        setState(new InGameState());
+        InGameState inGameState = new InGameState(game);
+        setState(inGameState);
     }
 
     public void handleListGames() {
@@ -172,6 +176,14 @@ public class UserThread implements Runnable {
             for (Game game : currentGames) {
                 sendMessage("- " + game.getLobbyName() + " (" + game.getPlayers().size() + "/" + game.getMaxPlayers() + " players)");
             }
+        }
+    }
+
+    public void handleMove(int startPos, int endPos) {
+        if(state instanceof InGameState) {
+            InGameState inGameState = (InGameState) state;
+            Game game = inGameState.getGame();
+            game.move(player, startPos, endPos);
         }
     }
 

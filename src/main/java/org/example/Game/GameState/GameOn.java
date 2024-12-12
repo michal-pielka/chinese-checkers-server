@@ -7,7 +7,7 @@ public class GameOn implements GameState {
 
     @Override
     public void handle(Game game) {
-        game.broadcastMessage("Ruch gracza: " + game.getCurrentPlayer() + " " + game.getPlayers().get(game.getCurrentPlayer()).getName());
+        game.broadcastMessage("Move of player: " + (game.getCurrentPlayer()+1) + " " + game.getPlayers().get(game.getCurrentPlayer()).getName());
     }
 
     @Override
@@ -17,7 +17,7 @@ public class GameOn implements GameState {
 
     @Override
     public void play(Game game, int startPos, int endPos) {
-        System.out.println("Moved from: " + startPos + " to : " + endPos);
+        game.broadcastMessage("Moved from: " + startPos + " to : " + endPos);
         game.endTurn();
         handle(game);
     }
