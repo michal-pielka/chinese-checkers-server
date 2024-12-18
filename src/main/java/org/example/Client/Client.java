@@ -74,6 +74,7 @@ public class Client {
                     break; // Exit if no more input
                 }
             }
+
         } catch (Exception e) {
             System.err.println("Error handling user input: " + e.getMessage());
 

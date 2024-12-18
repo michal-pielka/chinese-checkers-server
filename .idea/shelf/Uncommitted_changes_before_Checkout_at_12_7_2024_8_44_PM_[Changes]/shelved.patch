@@ -1,0 +1,26 @@
+Index: src/main/java/org/example/MyThread/MyThread.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package org.example.MyThread;\r\n\r\nimport java.io.*;\r\nimport java.net.Socket;\r\n\r\npublic class MyThread extends Thread{\r\n    private Socket clientSocket;\r\n\r\n    public MyThread(Socket socket) {\r\n        this.clientSocket = socket;\r\n    }\r\n\r\n    @Override\r\n    public void run() {\r\n        try(\r\n            InputStream input = clientSocket.getInputStream();\r\n            BufferedReader reader = new BufferedReader(new InputStreamReader(input));\r\n            OutputStream output = clientSocket.getOutputStream();\r\n            PrintWriter writer = new PrintWriter(output, true);\r\n        ){\r\n            writer.println(\"Select option: \");\r\n            writer.println(\"create\");\r\n            writer.println(\"create LOBBY_NAME MAX_PLAYER_SIZE\");\r\n            writer.println(\"join LOBBY_NAME\");\r\n\r\n            String line;\r\n            line = reader.readLine();\r\n            String[] message = line.split(\" \");\r\n            if(message.length == 1 && message[0].equalsIgnoreCase(\"create\")) {\r\n\r\n            }\r\n            else if(message.length == 2 && message[0].equalsIgnoreCase(\"join\")){\r\n\r\n            }\r\n            else if(message.length == 3 && message[0].equalsIgnoreCase(\"create\")){\r\n\r\n            }\r\n            else {\r\n\r\n            }\r\n        }\r\n        catch(IOException e) {\r\n            e.printStackTrace();\r\n        }\r\n        finally {\r\n            try{\r\n                clientSocket.close();\r\n            }\r\n            catch (IOException e) {\r\n                e.printStackTrace();\r\n            }\r\n        }\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/org/example/MyThread/MyThread.java b/src/main/java/org/example/MyThread/MyThread.java
+--- a/src/main/java/org/example/MyThread/MyThread.java	(revision 677effee5e4e9f2fdb4895119060441db7e0549f)
++++ b/src/main/java/org/example/MyThread/MyThread.java	(date 1733600508071)
+@@ -9,7 +9,7 @@
+     public MyThread(Socket socket) {
+         this.clientSocket = socket;
+     }
+-
++    
+     @Override
+     public void run() {
+         try(
+@@ -36,7 +36,7 @@
+ 
+             }
+             else {
+-
++                writer.println("Unexpected command.");
+             }
+         }
+         catch(IOException e) {

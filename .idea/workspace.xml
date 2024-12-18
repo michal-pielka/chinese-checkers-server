@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a2ab4cab-57cd-4b73-b25e-6d92a750d9f9" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/GameOn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/GameOn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/GameStart.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/GameState/GameStart.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Game/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/CommandRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/CommandRegistry.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/MoveCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/Commands/MoveCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server/States/InGameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/States/InGameState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Server/UserThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Server/UserThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Game/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Game/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Game/GameState/GameOn.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Game/GameState/GameOn.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Game/GameState/GameStart.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Game/GameState/GameStart.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Game/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Game/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Server/Commands/CommandRegistry.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Server/Commands/CommandRegistry.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Server/Commands/MoveCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Server/Commands/MoveCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Server/States/InGameState.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Server/States/InGameState.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/example/Server/UserThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/example/Server/UserThread.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="michal" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "WiT1t"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/michal-pielka/chinese-checkers-server.git",
+    "accountId": "b10251a8-66c2-4b30-9867-8b316c82ec4b"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 3
+}]]></component>
+  <component name="ProjectId" id="2q7U4Otekqo3qBmcrGwDzTf3pGL" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.RunClient.executor": "Run",
+    "Application.RunServer.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "wit",
+    "kotlin-language-version-configured": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="test" type="Application" factoryName="Application" singleton="false">
+      <option name="MAIN_CLASS_NAME" value="org.example.Client.RunClient" />
+      <module name="ChineseCheckers" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a2ab4cab-57cd-4b73-b25e-6d92a750d9f9" name="Changes" comment="" />
+      <created>1734012917885</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1734012917885</updated>
+    </task>
+    <servers />
+  </component>
+</project>
