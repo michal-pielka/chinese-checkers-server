@@ -1,7 +1,7 @@
 package org.example.Server.Commands;
 
-import org.example.Server.UserThread;
+import org.example.Server.UserSession;
 
 public interface Command {
-    void execute(UserThread user, String[] args);
+    void execute(UserSession session, String[] args);
 }

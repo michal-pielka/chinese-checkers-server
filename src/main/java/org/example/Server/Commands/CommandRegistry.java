@@ -7,12 +7,11 @@ public class CommandRegistry {
     private Map<String, Command> commands = new HashMap<>();
 
     public CommandRegistry() {
-        // Register commands
-        register("join", new JoinCommand());
-        register("create", new CreateCommand());
-        register("list", new ListGamesCommand());
-        register("quit", new QuitCommand());
-        register("move", new MoveCommand());
+        register(CommandConstants.JOIN, new JoinCommand());
+        register(CommandConstants.CREATE, new CreateCommand());
+        register(CommandConstants.LIST, new ListGamesCommand());
+        register(CommandConstants.QUIT, new QuitCommand());
+        register(CommandConstants.MOVE, new MoveCommand());
     }
 
     public void register(String commandName, Command command) {

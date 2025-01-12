@@ -13,6 +13,7 @@ public class RunServer {
         try {
             Server server = new Server(PORT, THREAD_POOL_SIZE);
             server.start();
+
         } catch (IOException e) {
             System.err.println("Failed to start the server: " + e.getMessage());
         }
