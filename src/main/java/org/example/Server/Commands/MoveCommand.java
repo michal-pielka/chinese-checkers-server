@@ -15,6 +15,7 @@ public class MoveCommand implements Command {
             int endPos = Integer.parseInt(args[2]);
             Game game = ((org.example.Server.States.InGameState) session.getState()).getGame();
             game.move(session.getPlayer(), startPos, endPos);
+
         } catch (NumberFormatException e) {
             session.sendMessage("Start and End positions should be integers.");
         } catch (ClassCastException e) {

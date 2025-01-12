@@ -1,5 +1,47 @@
 
-File path: Server/UserSession.java:
+File path: src/main/java/org/example/main.java:
+// File path: GUI/src/main/java/org/example/gui/Main.java
+package org.example.gui;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import org.example.gui.controllers.LobbyController;
+
+public class Main extends Application {
+    private LobbyController lobbyController;
+
+    @Override
+    public void start(Stage primaryStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/lobby.fxml"));
+            Scene scene = new Scene(loader.load());
+            primaryStage.setTitle("Chinese Checkers - Lobby");
+            primaryStage.setScene(scene);
+            primaryStage.setResizable(false);
+            primaryStage.show();
+
+            lobbyController = loader.getController();
+
+            // Handle application close to shutdown network client
+            primaryStage.setOnCloseRequest(event -> {
+                if (lobbyController != null) {
+                    lobbyController.shutdown();
+                }
+            });
+
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+}
+
+File path: src/main/java/org/example/Server/UserSession.java:
 package org.example.Server;
 
 import org.example.Game.Game;
@@ -187,7 +229,7 @@ public class UserSession {
     }
 }
 
-File path: Server/UserThread.java:
+File path: src/main/java/org/example/Server/UserThread.java:
 package org.example.Server;
 
 import java.io.IOException;
@@ -278,7 +320,7 @@ public class UserThread implements Runnable {
     }
 }
 
-File path: Server/UserManager.java:
+File path: src/main/java/org/example/Server/UserManager.java:
 // File path: src/main/java/org/example/Server/UserManager.java
 package org.example.Server;
 
@@ -314,7 +356,7 @@ public class UserManager {
     // Additional management methods can be added here if needed in the future
 }
 
-File path: Server/Server.java:
+File path: src/main/java/org/example/Server/Server.java:
 package org.example.Server;
 
 import org.example.Game.Game;
@@ -437,7 +479,7 @@ public class Server {
     }
 }
 
-File path: Server/RunServer.java:
+File path: src/main/java/org/example/Server/RunServer.java:
 package org.example.Server;
 
 import java.io.IOException;
@@ -460,7 +502,7 @@ public class RunServer {
     }
 }
 
-File path: Server/States/InGameState.java:
+File path: src/main/java/org/example/Server/States/InGameState.java:
 // File path: src/main/java/org/example/Server/States/InGameState.java
 package org.example.Server.States;
 
@@ -503,7 +545,7 @@ public class InGameState extends UserState {
     }
 }
 
-File path: Server/States/UserState.java:
+File path: src/main/java/org/example/Server/States/UserState.java:
 package org.example.Server.States;
 
 import org.example.Server.UserSession;
@@ -517,7 +559,7 @@ public abstract class UserState {
     public abstract void handleCommand(UserSession session, String commandLine);
 }
 
-File path: Server/States/LobbyState.java:
+File path: src/main/java/org/example/Server/States/LobbyState.java:
 // File path: src/main/java/org/example/Server/States/LobbyState.java
 package org.example.Server.States;
 
@@ -555,7 +597,7 @@ public class LobbyState extends UserState {
     }
 }
 
-File path: Server/Commands/CreateCommand.java:
+File path: src/main/java/org/example/Server/Commands/CreateCommand.java:
 package org.example.Server.Commands;
 
 import org.example.Game.Game;
@@ -594,7 +636,7 @@ public class CreateCommand implements Command {
     }
 }
 
-File path: Server/Commands/JoinCommand.java:
+File path: src/main/java/org/example/Server/Commands/JoinCommand.java:
 package org.example.Server.Commands;
 
 import org.example.Game.Game;
@@ -639,7 +681,7 @@ public class JoinCommand implements Command {
     }
 }
 
-File path: Server/Commands/ListGamesCommand.java:
+File path: src/main/java/org/example/Server/Commands/ListGamesCommand.java:
 package org.example.Server.Commands;
 
 import org.example.Server.UserSession;
@@ -668,7 +710,7 @@ public class ListGamesCommand implements Command {
     }
 }
 
-File path: Server/Commands/Command.java:
+File path: src/main/java/org/example/Server/Commands/Command.java:
 package org.example.Server.Commands;
 
 import org.example.Server.UserSession;
@@ -677,7 +719,7 @@ public interface Command {
     void execute(UserSession session, String[] args);
 }
 
-File path: Server/Commands/QuitCommand.java:
+File path: src/main/java/org/example/Server/Commands/QuitCommand.java:
 package org.example.Server.Commands;
 
 import org.example.Server.UserSession;
@@ -696,7 +738,7 @@ public class QuitCommand implements Command {
     }
 }
 
-File path: Server/Commands/CommandRegistry.java:
+File path: src/main/java/org/example/Server/Commands/CommandRegistry.java:
 package org.example.Server.Commands;
 
 import java.util.HashMap;
@@ -722,7 +764,7 @@ public class CommandRegistry {
     }
 }
 
-File path: Server/Commands/CommandConstants.java:
+File path: src/main/java/org/example/Server/Commands/CommandConstants.java:
 package org.example.Server.Commands;
 
 /**
@@ -736,7 +778,7 @@ public class CommandConstants {
     public static final String MOVE = "move";
 }
 
-File path: Server/Commands/MoveCommand.java:
+File path: src/main/java/org/example/Server/Commands/MoveCommand.java:
 package org.example.Server.Commands;
 
 import org.example.Server.UserSession;
@@ -754,6 +796,7 @@ public class MoveCommand implements Command {
             int endPos = Integer.parseInt(args[2]);
             Game game = ((org.example.Server.States.InGameState) session.getState()).getGame();
             game.move(session.getPlayer(), startPos, endPos);
+
         } catch (NumberFormatException e) {
             session.sendMessage("Start and End positions should be integers.");
         } catch (ClassCastException e) {
@@ -763,7 +806,43 @@ public class MoveCommand implements Command {
     }
 }
 
-File path: Game/Player.java:
+File path: src/main/java/org/example/models/Game.java:
+package org.example.models;
+
+/**
+ * Represents a game lobby with a name and player count.
+ */
+public class Game {
+    private String lobbyName;
+    private int currentPlayers;
+    private int maxPlayers;
+
+    public Game(String lobbyName, int currentPlayers, int maxPlayers) {
+        this.lobbyName = lobbyName;
+        this.currentPlayers = currentPlayers;
+        this.maxPlayers = maxPlayers;
+    }
+
+    public String getLobbyName() {
+        return lobbyName;
+    }
+
+    public int getCurrentPlayers() {
+        return currentPlayers;
+    }
+
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s (%d/%d players)", lobbyName, currentPlayers, maxPlayers);
+    }
+}
+
+
+File path: src/main/java/org/example/Game/Player.java:
 package org.example.Game;
 
 import java.io.PrintWriter;
@@ -788,7 +867,7 @@ public class Player {
     public void setName(String name) {this.playerName = name;}
 }
 
-File path: Game/Game.java:
+File path: src/main/java/org/example/Game/Game.java:
 package org.example.Game;
 
 import org.example.Game.GameState.GameState;
@@ -862,19 +941,19 @@ public class Game {
     }
 }
 
-File path: Game/Board.java:
+File path: src/main/java/org/example/Game/Board.java:
 package org.example.Game;
 
 public interface Board {
 }
 
-File path: Game/StdBoard.java:
+File path: src/main/java/org/example/Game/StdBoard.java:
 package org.example.Game;
 
 public class StdBoard implements Board{
 }
 
-File path: Game/GameState/WaitingForPlayers.java:
+File path: src/main/java/org/example/Game/GameState/WaitingForPlayers.java:
 package org.example.Game.GameState;
 
 import org.example.Game.Game;
@@ -912,7 +991,7 @@ public class WaitingForPlayers implements GameState {
     }
 }
 
-File path: Game/GameState/GameStart.java:
+File path: src/main/java/org/example/Game/GameState/GameStart.java:
 package org.example.Game.GameState;
 
 import org.example.Game.Game;
@@ -943,7 +1022,7 @@ public class GameStart implements GameState{
     }
 }
 
-File path: Game/GameState/GameOn.java:
+File path: src/main/java/org/example/Game/GameState/GameOn.java:
 package org.example.Game.GameState;
 
 import org.example.Game.Game;
@@ -969,7 +1048,7 @@ public class GameOn implements GameState {
     }
 }
 
-File path: Game/GameState/GameOver.java:
+File path: src/main/java/org/example/Game/GameState/GameOver.java:
 package org.example.Game.GameState;
 
 import org.example.Game.Game;
@@ -993,7 +1072,7 @@ public class GameOver implements GameState {
     }
 }
 
-File path: Game/GameState/GameState.java:
+File path: src/main/java/org/example/Game/GameState/GameState.java:
 package org.example.Game.GameState;
 
 import org.example.Game.Game;
@@ -1005,7 +1084,90 @@ public interface GameState {
     void play(Game game, int startPos, int endPos);
 }
 
-File path: Client/RunClient.java:
+File path: src/main/java/org/example/controllers/GameController.java:
+package org.example.controllers;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+
+public class GameController {
+    @FXML
+    private Label gameStatusLabel;
+
+    /**
+     * Initializes the Game Window.
+     */
+    @FXML
+    public void initialize() {
+        gameStatusLabel.setText("Game is initializing...");
+        // TODO: Implement game initialization and UI updates
+    }
+
+    // Additional methods to handle game interactions will be added here
+}
+
+File path: src/main/java/org/example/controllers/CreateGameDialog.java:
+package org.example.controllers;
+
+import javafx.geometry.Insets;
+import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import org.example.models.Game;
+
+import java.util.Optional;
+
+/**
+ * Dialog for creating a new game lobby.
+ */
+public class CreateGameDialog extends Dialog<Game> {
+
+    private TextField lobbyNameField;
+    private ComboBox<Integer> maxPlayersBox;
+
+    public CreateGameDialog() {
+        setTitle("Create New Game");
+        setHeaderText("Enter details to create a new game lobby.");
+
+        ButtonType createButtonType = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
+        getDialogPane().getButtonTypes().addAll(createButtonType, ButtonType.CANCEL);
+
+        lobbyNameField = new TextField();
+        lobbyNameField.setPromptText("Lobby Name");
+
+        maxPlayersBox = new ComboBox<>();
+        maxPlayersBox.getItems().addAll(2, 3, 4, 6);
+        maxPlayersBox.setValue(2);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        grid.add(new Label("Lobby Name:"), 0, 0);
+        grid.add(lobbyNameField, 1, 0);
+        grid.add(new Label("Max Players:"), 0, 1);
+        grid.add(maxPlayersBox, 1, 1);
+
+        getDialogPane().setContent(grid);
+
+        // Enable/Disable create button based on input
+        Node createButton = getDialogPane().lookupButton(createButtonType);
+        createButton.setDisable(true);
+
+        lobbyNameField.textProperty().addListener((observable, oldValue, newValue) -> {
+            createButton.setDisable(newValue.trim().isEmpty());
+        });
+
+        setResultConverter(dialogButton -> {
+            if (dialogButton == createButtonType) {
+                return new Game(lobbyNameField.getText().trim(), 1, maxPlayersBox.getValue());
+            }
+            return null;
+        });
+    }
+}
+
+File path: src/main/java/org/example/Client/RunClient.java:
 package org.example.Client;
 
 import java.io.IOException;
@@ -1028,7 +1190,7 @@ public class RunClient {
     }
 }
 
-File path: Client/Client.java:
+File path: src/main/java/org/example/Client/Client.java:
 package org.example.Client;
 
 import java.io.IOException;
@@ -1079,7 +1241,6 @@ public class Client {
             throw e;
         }
     }
-
     
 
     /**
