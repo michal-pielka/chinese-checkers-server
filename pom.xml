@@ -1,25 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
                              http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>ChineseCheckers</artifactId>
+    <artifactId>chinese-checkers-server</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>Chinese Checkers Server</name>
+    <description>A simple Chinese Checkers server application.</description>
 
     <properties>
-        <!-- Set Java version to 17 (LTS) -->
         <java.version>17</java.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <javafx.version>19</javafx.version>
+        <javafx.version>20</javafx.version>
     </properties>
 
     <dependencies>
-        <!-- JavaFX Modules -->
+        <!-- Existing dependencies -->
+
+        <!-- JavaFX Dependencies -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
@@ -30,16 +33,6 @@
             <artifactId>javafx-fxml</artifactId>
             <version>${javafx.version}</version>
         </dependency>
-        
-        <!-- (Optional) Gson for JSON Parsing -->
-        <!-- Uncomment if you plan to use JSON parsing in the future -->
-        <!--
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.10.1</version>
-        </dependency>
-        -->
     </dependencies>
 
     <build>
@@ -48,7 +41,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.10.1</version>
+                <version>3.8.1</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -68,14 +61,24 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!-- Specify the main class of your JavaFX application -->
-                    <mainClass>org.example.gui.Main</mainClass>
-                    
-                    <!-- (Optional) Specify JavaFX modules if needed -->
-                    <!--
-                    <module>javafx.controls,javafx.fxml</module>
-                    -->
+                    <!-- This can remain as is or be adjusted based on your primary class -->
+                    <mainClass>org.example.Gui.LobbyApp</mainClass>
                 </configuration>
+            </plugin>
+
+            <!-- Maven Exec Plugin to run multiple main classes -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>run-gui</id>
+                        <goals>
+                            <goal>java</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
