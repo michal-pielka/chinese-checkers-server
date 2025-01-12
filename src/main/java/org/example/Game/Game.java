@@ -1,5 +1,6 @@
 package org.example.Game;
 
+import org.example.Game.Board.Board;
 import org.example.Game.GameState.GameState;
 import org.example.Game.GameState.WaitingForPlayers;
 import java.util.ArrayList;
