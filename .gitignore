@@ -1,0 +1,60 @@
+# ====== Compiled Java Classes ======
+*.class
+
+# ====== Log Files ======
+*.log
+
+# ====== Package Files ======
+*.jar
+*.war
+*.ear
+
+# ====== Build Directories ======
+# Maven
+target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+
+# Gradle
+build/
+.gradle/
+
+# ====== IDE Specific Files ======
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
+
+# ====== OS Generated Files ======
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+
+# ====== Temporary Files ======
+*.tmp
+*.swp
+*.swo
