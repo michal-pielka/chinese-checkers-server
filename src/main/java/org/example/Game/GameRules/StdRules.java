@@ -4,6 +4,7 @@ import org.example.Game.Board.Board;
 import org.example.Game.Board.Node;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class StdRules implements GameRules{
@@ -40,7 +41,7 @@ public class StdRules implements GameRules{
         if(board.containsNode(key1) && board.containsNode(key2)) {
             node1 = board.getNode(key1);
             node2 = board.getNode(key2);
-            if(node2.getBase() == 0 || node2.getBase() == node1.getPlayer() + 3) {
+            if(node2.getBase() == 0 || node2.getBase() == (node1.getPlayer() + 2)%6 + 1) {
                 if(node1.neighbours.contains(node2) && node2.getPlayer()==0) {
                     return true;
                 }
@@ -54,7 +55,13 @@ public class StdRules implements GameRules{
     }
 
     @Override
-    public boolean checkForWin() {
+    public boolean checkForWin(int player) {
+        List<String> targetBase = board.getBase((player+2)%6 + 1);
+        for(String key: targetBase) {
+            if(board.getNode(key).getPlayer() != player) {
+                return false;
+            }
+        }
         return true;
     }
 }

@@ -124,4 +124,7 @@ public class StdBoard implements Board {
         return graph.containsNode(key);
     }
 
+    @Override
+    public List<String> getBase(int baseNumber) {return bases.get(baseNumber-1);}
+
 }
