@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Node {
-    int x, y, player, base;
-    List<Node> neighbours;
+     private final int x;
+     private final int y;
+     private int player;
+     private int base;
+     List<Node> neighbours;
 
 
     public Node(int x, int y) {
@@ -17,7 +20,9 @@ public class Node {
     }
 
     public void addNeighbour(Node neighbour) {
-        neighbours.add(neighbour);
+        if(!neighbours.contains(neighbour)) {
+            neighbours.add(neighbour);
+        }
     }
 
     public void setPlayer(int x) {
@@ -31,7 +36,16 @@ public class Node {
     public void setBase(int x) {
         this.base = x;
     }
+
     public int getBase() {
         return base;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

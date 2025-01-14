@@ -1,6 +1,5 @@
 package org.example.Game.Board;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,6 +19,14 @@ public class Graph {
         }
     }
 
+    public Node getNode(String key) {
+       return nodes.getOrDefault(key, null);
+    }
+
+    public boolean containsNode(String key) {
+        return nodes.containsKey(key);
+    }
+
     public void addEdge(int x1, int y1, int x2, int y2) {
         String key1 = getKey(x1, y1);
         String key2 = getKey(x2, y2);
@@ -31,16 +38,5 @@ public class Graph {
 
     private String getKey(int x, int y) {
         return x + ":" + y;
-    }
-
-    public void setBase(int player, int[][] coordinates) {
-        for(int i=0; i < coordinates.length; i++) {
-           if(coordinates[i].length == 2) {
-              String key = getKey(coordinates[i][0], coordinates[i][1]);
-              if(nodes.containsKey(key)) {
-                  nodes.get(key).setBase(player);
-              }
-           }
-        }
     }
 }
