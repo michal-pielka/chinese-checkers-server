@@ -1,6 +1,7 @@
 package org.example.Game;
 
 import org.example.Game.Board.Board;
+import org.example.Game.GameRules.GameRules;
 import org.example.Game.GameState.GameState;
 import org.example.Game.GameState.WaitingForPlayers;
 import java.util.ArrayList;
@@ -13,11 +14,11 @@ public class Game {
     Board board;
     GameState state;
 
-    public Game(String name, int playerCount) {
+    public Game(String name, int playerCount, Board board) {
         this.lobbyName = name;
         this. maxPlayers = playerCount;
         players = new ArrayList<>();
-        board = null; // Do poprawy!!!
+        this.board = board;
         state = new WaitingForPlayers();
         currentPlayer = 0;
     }
@@ -57,6 +58,8 @@ public class Game {
             player.sendMessage(message);
         }
     }
+
+    public Board getBoard() { return board; }
 
     public void move(Player player, int startPos, int endPos) {
         if(players.get(currentPlayer) != player) {

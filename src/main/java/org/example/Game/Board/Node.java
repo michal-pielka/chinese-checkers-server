@@ -8,7 +8,7 @@ public class Node {
      private final int y;
      private int player;
      private int base;
-     List<Node> neighbours;
+     public List<Node> neighbours;
 
 
     public Node(int x, int y) {
