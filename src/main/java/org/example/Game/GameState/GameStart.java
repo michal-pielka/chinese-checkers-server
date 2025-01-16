@@ -5,6 +5,9 @@ import org.example.Game.Player;
 
 import java.util.Random;
 
+/**
+ * Represents the state of the game when it is about to start.
+ */
 public class GameStart implements GameState{
 
     @Override
@@ -23,7 +26,7 @@ public class GameStart implements GameState{
     }
 
     @Override
-    public void play(Game game, int startPos, int endPos) {
+    public void play(Game game, int x1, int y1, int x2, int y2) {
         game.broadcastMessage("Game is not started yet.");
     }
 }

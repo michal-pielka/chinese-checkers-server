@@ -1,6 +1,8 @@
 package org.example.Server.Commands;
 
+import org.example.Game.Board.StdBoard;
 import org.example.Game.Game;
+import org.example.Game.GameRules.StdRules;
 import org.example.Server.States.InGameState;
 import org.example.Server.UserSession;
 
@@ -18,7 +20,7 @@ public class CreateCommand implements Command {
         }
 
         int maxPlayers = session.askForNumberOfPlayers();
-        Game game = new Game(lobbyName, maxPlayers);
+        Game game = new Game(lobbyName, maxPlayers, new StdBoard(maxPlayers), new StdRules());
 
         session.getServer().addGame(game);
         System.out.println("User " + session.getPlayer().getName() + " created game '" + lobbyName + "', max players: " + maxPlayers);

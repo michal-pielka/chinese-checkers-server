@@ -3,6 +3,9 @@ package org.example.Game.GameState;
 import org.example.Game.Game;
 import org.example.Game.Player;
 
+/**
+ * Represents the state of the game when waiting for players to join.
+ */
 public class WaitingForPlayers implements GameState {
 
     @Override
@@ -30,7 +33,7 @@ public class WaitingForPlayers implements GameState {
     }
 
     @Override
-    public void play(Game game, int startPos, int endPos) {
+    public void play(Game game, int x1, int y1, int x2, int y2) {
         game.broadcastMessage("We are still waiting for players.");
     }
 }

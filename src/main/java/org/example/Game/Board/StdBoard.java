@@ -4,10 +4,19 @@ import java.util.*;
 
 import static java.lang.Math.min;
 
+/**
+ * Represents a standard implementation of the game board.
+ * This class manages the graph structure of the board, player positions, and base configurations.
+ */
 public class StdBoard implements Board {
     private final Graph graph;
     private final List<List<String>> bases;
 
+    /**
+     * Constructs a standard board for the game with the specified number of players.
+     *
+     * @param players the number of players in the game.
+     */
     public StdBoard(int players) {
         this.graph = new Graph();
         this.bases = new ArrayList<>();
@@ -17,6 +26,11 @@ public class StdBoard implements Board {
         generate(players);
     }
 
+    /**
+     * Generates the board structure, including nodes, edges, bases, and player pegs.
+     *
+     * @param players the number of players in the game.
+     */
     private void generate(int players) {
         addNodes();
         addEdges();
@@ -24,6 +38,9 @@ public class StdBoard implements Board {
         addPegs(players);
     }
 
+    /**
+     * Adds nodes to the board to represent positions.
+     */
     private void addNodes() {
         for (int i = 0; i <= 3; i++) {
             for (int j = 4; j <= 4 + i; j++) {
@@ -50,6 +67,9 @@ public class StdBoard implements Board {
         }
     }
 
+    /**
+     * Adds edges between nodes to define the connections on the board.
+     */
     private void addEdges() {
         for (int i = 0; i < 17; i++) {
             for (int j = 0; j < 17; j++) {
@@ -60,6 +80,9 @@ public class StdBoard implements Board {
         }
     }
 
+    /**
+     * Configures the bases on the board and assigns them to specific positions.
+     */
     private void setBases() {
         Collections.addAll(bases.get(0), "4:0", "4:1", "5:1", "4:2", "5:2", "6:2", "4:3", "5:3", "6:3", "7:3");
         setBase(1, bases.get(0));
@@ -80,6 +103,12 @@ public class StdBoard implements Board {
         setBase(6, bases.get(5));
     }
 
+    /**
+     * Assigns a base to a player.
+     *
+     * @param player the player number.
+     * @param keys   the list of node keys in the base.
+     */
     private void setBase(int player, List<String> keys) {
         for (String key : keys) {
             if (graph.containsNode(key)) {
@@ -88,6 +117,11 @@ public class StdBoard implements Board {
         }
     }
 
+    /**
+     * Places pegs for each player in their respective starting bases.
+     *
+     * @param players the number of players.
+     */
     private void addPegs(int players) {
         int[][] configurations = {
                 {1, 4},
