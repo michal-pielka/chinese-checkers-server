@@ -56,7 +56,7 @@ public class StdRules implements GameRules{
             if(node1.getPlayer() != player) {
                 return false;
             }
-            if(node1.getBase() == (node1.getPlayer() + 2)%6 + 1 && node2.getBase() != node1.getBase()) {
+            if(board.inTargetBase(key1) && !board.inTargetBase(key2)) {
                 return false;
             }
 
@@ -73,7 +73,7 @@ public class StdRules implements GameRules{
 
     @Override
     public boolean checkForWin(Board board, int player) {
-        List<String> targetBase = board.getBase((player+2)%6 + 1);
+        List<String> targetBase = board.getTargetBase(player);
         for(String key: targetBase) {
             if(board.getNode(key).getPlayer() != player) {
                 return false;

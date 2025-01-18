@@ -29,7 +29,6 @@ public class Graph {
         if(!nodes.containsKey(key)) {
             Node newNode = new Node(x,y);
             nodes.put(key, newNode);
-            newNode.setBase(0);
             newNode.setPlayer(0);
         }
     }
@@ -81,5 +80,9 @@ public class Graph {
      */
     private String getKey(int x, int y) {
         return x + ":" + y;
+    }
+
+    public Map<String,Node> getNodes() {
+        return nodes;
     }
 }

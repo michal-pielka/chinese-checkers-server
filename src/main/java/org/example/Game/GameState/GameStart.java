@@ -1,5 +1,7 @@
 package org.example.Game.GameState;
 
+import javafx.application.Application;
+import org.example.Game.GUI.BoardDisplay;
 import org.example.Game.Game;
 import org.example.Game.Player;
 
@@ -12,6 +14,10 @@ public class GameStart implements GameState{
 
     @Override
     public void handle(Game game) {
+        new Thread(() -> {
+            BoardDisplay.launchBoardDisplay(game.getBoard());
+        }).start();
+
         Random random = new Random();
         int startingPlayer = random.nextInt(game.getMaxPlayers());
         game.setCurrentPlayer(startingPlayer);

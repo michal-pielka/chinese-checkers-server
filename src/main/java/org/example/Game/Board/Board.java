@@ -1,6 +1,7 @@
 package org.example.Game.Board;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents the game board.
@@ -25,6 +26,8 @@ public interface Board {
      */
     Node getNode(String key);
 
+    Map<String,Node> getNodes();
+
     /**
      * Checks if a node exists at the specified key.
      *
@@ -33,11 +36,8 @@ public interface Board {
      */
     boolean containsNode(String key);
 
-    /**
-     * Retrieves all keys associated with a specific base.
-     *
-     * @param baseNumber the number of the base (1 through 6).
-     * @return a list of strings representing the keys of the nodes in the specified base.
-     */
-    List<String> getBase(int baseNumber);
+
+    List<String> getTargetBase(int player);
+
+    boolean inTargetBase(String key);
 }

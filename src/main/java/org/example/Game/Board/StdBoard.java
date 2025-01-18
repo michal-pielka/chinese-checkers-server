@@ -11,6 +11,7 @@ import static java.lang.Math.min;
 public class StdBoard implements Board {
     private final Graph graph;
     private final List<List<String>> bases;
+    private final int players;
 
     /**
      * Constructs a standard board for the game with the specified number of players.
@@ -23,19 +24,16 @@ public class StdBoard implements Board {
         for(int i=0; i<6; i++) {
             bases.add(new ArrayList<>());
         }
-        generate(players);
+        this.players = players;
+        generate();
     }
 
-    /**
-     * Generates the board structure, including nodes, edges, bases, and player pegs.
-     *
-     * @param players the number of players in the game.
-     */
-    private void generate(int players) {
+
+    private void generate() {
         addNodes();
         addEdges();
         setBases();
-        addPegs(players);
+        addPegs();
     }
 
     /**
@@ -80,49 +78,31 @@ public class StdBoard implements Board {
         }
     }
 
-    /**
-     * Configures the bases on the board and assigns them to specific positions.
-     */
+
     private void setBases() {
         Collections.addAll(bases.get(0), "4:0", "4:1", "5:1", "4:2", "5:2", "6:2", "4:3", "5:3", "6:3", "7:3");
-        setBase(1, bases.get(0));
-
-        Collections.addAll(bases.get(1), "0:4", "1:4", "1:5", "2:4", "2:5", "2:6", "3:4", "3:5", "3:6", "3:7");
-        setBase(2, bases.get(1));
-
-        Collections.addAll(bases.get(2), "4:9", "4:10", "4:11", "4:12", "5:10", "5:11", "5:12", "6:11", "6:12", "7:12");
-        setBase(3, bases.get(2));
-
+        Collections.addAll(bases.get(1), "9:4", "10:4", "10:5", "11:4", "11:5", "11:6", "12:4", "12:5", "12:6", "12:7");
+        Collections.addAll(bases.get(2), "13:9", "13:10", "13:11", "13:12", "14:10", "14:11", "14:12", "15:11", "15:12", "16:12");
         Collections.addAll(bases.get(3), "9:13", "10:13", "10:14", "11:13", "11:14", "11:15", "12:13", "12:14", "12:15", "12:16");
-        setBase(4, bases.get(3));
+        Collections.addAll(bases.get(4), "4:9", "4:10", "4:11", "4:12", "5:10", "5:11", "5:12", "6:11", "6:12", "7:12");
+        Collections.addAll(bases.get(5), "0:4", "1:4", "1:5", "2:4", "2:5", "2:6", "3:4", "3:5", "3:6", "3:7");
 
-        Collections.addAll(bases.get(4), "13:9", "13:10", "13:11", "13:12", "14:10", "14:11", "14:12", "15:11", "15:12", "16:12");
-        setBase(5, bases.get(4));
 
-        Collections.addAll(bases.get(5), "9:4", "10:4", "10:5", "11:4", "11:5", "11:6", "12:4", "12:5", "12:6", "12:7");
-        setBase(6, bases.get(5));
+
+
+
     }
 
-    /**
-     * Assigns a base to a player.
-     *
-     * @param player the player number.
-     * @param keys   the list of node keys in the base.
-     */
-    private void setBase(int player, List<String> keys) {
-        for (String key : keys) {
-            if (graph.containsNode(key)) {
-                graph.getNode(key).setBase(player);
+    private void addPegs() {
+        int[] config = getStartConfiguration();
+        for (int i = 0; i < config.length; i++) {
+            for (String key : bases.get(config[i] - 1)) {
+                graph.getNode(key).setPlayer(i + 1);
             }
         }
     }
 
-    /**
-     * Places pegs for each player in their respective starting bases.
-     *
-     * @param players the number of players.
-     */
-    private void addPegs(int players) {
+    private int[] getStartConfiguration() {
         int[][] configurations = {
                 {1, 4},
                 {1, 3, 5},
@@ -130,12 +110,23 @@ public class StdBoard implements Board {
                 {1, 2, 3, 4, 5, 6}
         };
 
-        int[] config = configurations[min(players - 2, configurations.length - 1)];
-        for (int i = 0; i < config.length; i++) {
-            for (String key : bases.get(config[i] - 1)) {
-                graph.getNode(key).setPlayer(i + 1);
-            }
-        }
+        return configurations[min(players-2, configurations.length-1)];
+    }
+
+    private int[] getTargetConfiguration() {
+        int[][] configurations ={
+                {4, 1},
+                {4, 6, 2},
+                {4, 5, 1, 2},
+                {4, 5, 6, 1, 2, 3}
+        };
+
+        return configurations[min(players-2, configurations.length-1)];
+    }
+
+    @Override
+    public Map<String,Node> getNodes() {
+        return graph.getNodes();
     }
 
     @Override
@@ -159,6 +150,24 @@ public class StdBoard implements Board {
     }
 
     @Override
-    public List<String> getBase(int baseNumber) {return bases.get(baseNumber-1);}
+    public List<String> getTargetBase(int player) {
+        int[] config = getTargetConfiguration();
+        return bases.get(config[player-1] - 1);
+    }
+
+    @Override
+    public boolean inTargetBase(String key) {
+        int[] config = getTargetConfiguration();
+        Node node = getNode(key);
+        int player = node.getPlayer();
+        if(player == 0) {
+            return false;
+        }
+        int targetBase = config[player-1];
+        if(bases.get(targetBase-1).contains(key)) {
+            return true;
+        }
+        return false;
+    };
 
 }

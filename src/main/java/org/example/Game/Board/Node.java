@@ -1,5 +1,8 @@
 package org.example.Game.Board;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +13,7 @@ import java.util.List;
 public class Node {
      private final int x;
      private final int y;
-     private int player;
-     private int base;
+     private final IntegerProperty player;
      public List<Node> neighbours;
 
     /**
@@ -23,9 +25,8 @@ public class Node {
     public Node(int x, int y) {
         this.x = x;
         this.y = y;
-        this.player = 0;
-        this.base = 0;
         this.neighbours = new ArrayList<>();
+        this.player = new SimpleIntegerProperty(0);
     }
 
     /**
@@ -45,7 +46,7 @@ public class Node {
      * @param x the ID of the player (0 if unoccupied).
      */
     public void setPlayer(int x) {
-        this.player = x;
+        this.player.set(x);
     }
 
     /**
@@ -54,27 +55,12 @@ public class Node {
      * @return the player ID (0 if unoccupied).
      */
     public int getPlayer() {
+        return player.get();
+    }
+
+    public IntegerProperty playerProperty() {
         return player;
     }
-
-    /**
-     * Assigns this node to a specific base.
-     *
-     * @param x the ID of the base.
-     */
-    public void setBase(int x) {
-        this.base = x;
-    }
-
-    /**
-     * Retrieves the ID of the base this node belongs to.
-     *
-     * @return the base ID (0 if not part of a base).
-     */
-    public int getBase() {
-        return base;
-    }
-
     /**
      * Retrieves the x-coordinate of this node.
      *
