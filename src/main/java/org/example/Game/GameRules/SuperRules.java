@@ -9,7 +9,7 @@ import java.util.Set;
 
 public class SuperRules implements GameRules{
 
-    private boolean lineClear(Board board, int dx, int dy, int startX, int startY, int endX, int endY) {
+    public boolean lineClear(Board board, int dx, int dy, int startX, int startY, int endX, int endY) {
         int checkX = startX + dx;
         int checkY = startY + dy;
         while(checkX != endX || checkY != endY) {
@@ -22,7 +22,7 @@ public class SuperRules implements GameRules{
         return true;
     }
 
-    private Set<String> findJumps(Board board, int x, int y, Set<String> visited) {
+    public Set<String> findJumps(Board board, int x, int y, Set<String> visited) {
         String currKey = x+":"+y;
         visited.add(currKey);
 
