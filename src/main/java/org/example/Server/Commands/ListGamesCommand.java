@@ -1,5 +1,8 @@
 package org.example.Server.Commands;
 
+import org.example.Game.GameRules.GameRules;
+import org.example.Game.GameRules.StdRules;
+import org.example.Game.GameRules.SuperRules;
 import org.example.Server.UserSession;
 import org.example.Game.Game;
 
@@ -19,9 +22,20 @@ public class ListGamesCommand implements Command {
             for (Game g : currentGames) {
                 session.sendMessage("- " + g.getLobbyName() + " (" 
                                     + g.getPlayers().size() + "/" 
-                                    + g.getMaxPlayers() + " players)");
+                                    + g.getMaxPlayers() + " players, variant: "
+                                    + GameRulesToString(g.getRules())+ ")");
             }
             System.out.println("Listed " + currentGames.size() + " available games to user " + session.getPlayer().getName() + ".");
         }
+    }
+
+    private String GameRulesToString(GameRules rules) {
+        if(rules instanceof StdRules) {
+            return "Standard";
+        }
+        if(rules instanceof SuperRules) {
+            return "Super";
+        }
+        return "Unknown";
     }
 }
