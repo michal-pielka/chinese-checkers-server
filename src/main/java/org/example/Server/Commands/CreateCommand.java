@@ -3,6 +3,7 @@ package org.example.Server.Commands;
 import org.example.Game.Board.StdBoard;
 import org.example.Game.Game;
 import org.example.Game.GameRules.StdRules;
+import org.example.Game.GameRules.SuperRules;
 import org.example.Server.States.InGameState;
 import org.example.Server.UserSession;
 

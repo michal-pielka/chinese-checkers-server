@@ -156,10 +156,8 @@ public class StdBoard implements Board {
     }
 
     @Override
-    public boolean inTargetBase(String key) {
+    public boolean inTargetBase(int player, String key) {
         int[] config = getTargetConfiguration();
-        Node node = getNode(key);
-        int player = node.getPlayer();
         if(player == 0) {
             return false;
         }

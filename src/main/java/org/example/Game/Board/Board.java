@@ -39,5 +39,5 @@ public interface Board {
 
     List<String> getTargetBase(int player);
 
-    boolean inTargetBase(String key);
+    boolean inTargetBase(int player, String key);
 }

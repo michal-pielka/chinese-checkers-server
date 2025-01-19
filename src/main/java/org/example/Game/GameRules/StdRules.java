@@ -28,7 +28,7 @@ public class StdRules implements GameRules{
         Node currNode = board.getNode(currKey);
 
         for(Node neighbour : currNode.neighbours) {
-            if(neighbour.getPlayer() != 0 && neighbour.getPlayer() != currNode.getPlayer()) {
+            if(neighbour.getPlayer() != 0) {
                 int jumpX = 2 * (neighbour.getX() - x) + x;
                 int jumpY = 2 * (neighbour.getY() - y) + y;
                 String jumpKey = jumpX + ":" + jumpY;
@@ -56,7 +56,7 @@ public class StdRules implements GameRules{
             if(node1.getPlayer() != player) {
                 return false;
             }
-            if(board.inTargetBase(key1) && !board.inTargetBase(key2)) {
+            if(board.inTargetBase(player, key1) && !board.inTargetBase(player, key2)) {
                 return false;
             }
 
