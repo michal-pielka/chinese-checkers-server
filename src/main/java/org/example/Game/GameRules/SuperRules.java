@@ -25,7 +25,6 @@ public class SuperRules implements GameRules{
     private Set<String> findJumps(Board board, int x, int y, Set<String> visited) {
         String currKey = x+":"+y;
         visited.add(currKey);
-        Node currNode = board.getNode(currKey);
 
         int[] directionsX = {0, 1, 1, 0, -1, -1};
         int[] directionsY = {1, 1, 0, -1, -1, 0};
