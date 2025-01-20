@@ -1,14 +1,24 @@
 package org.example.Game.GameState;
 
+import javafx.application.Application;
+import org.example.Game.GUI.BoardDisplay;
 import org.example.Game.Game;
 import org.example.Game.Player;
+import org.example.Server.States.UserState;
 
 import java.util.Random;
 
+/**
+ * Represents the state of the game when it is about to start.
+ */
 public class GameStart implements GameState{
 
     @Override
     public void handle(Game game) {
+        new Thread(() -> {
+            BoardDisplay.launchBoardDisplay(game.getBoard());
+        }).start();
+
         Random random = new Random();
         int startingPlayer = random.nextInt(game.getMaxPlayers());
         game.setCurrentPlayer(startingPlayer);
@@ -23,7 +33,7 @@ public class GameStart implements GameState{
     }
 
     @Override
-    public void play(Game game, int startPos, int endPos) {
+    public void play(Game game, int x1, int y1, int x2, int y2) {
         game.broadcastMessage("Game is not started yet.");
     }
 }

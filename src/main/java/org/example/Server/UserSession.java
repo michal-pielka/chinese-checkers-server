@@ -1,6 +1,9 @@
 package org.example.Server;
 
 import org.example.Game.Game;
+import org.example.Game.GameRules.GameRules;
+import org.example.Game.GameRules.StdRules;
+import org.example.Game.GameRules.SuperRules;
 import org.example.Game.Player;
 import org.example.Server.States.UserState;
 import org.example.Server.States.LobbyState;
@@ -114,6 +117,24 @@ public class UserSession {
             }
         }
         return lobbyName;
+    }
+
+    public GameRules askForGameVariant() {
+        String gameVariant = null;
+        while (gameVariant==null || (!gameVariant.equals("std") && !gameVariant.equals("super"))) {
+            sendMessage("Please input 'Std' for standard game variant or 'Super' for super game variant.");
+            if(inputReader.hasNextLine()) {
+                gameVariant = inputReader.nextLine().trim().toLowerCase();
+            }
+            else {
+                gameVariant = "std";
+                System.out.println("No game variant detected. Defaulting to Standard Game Variant.");
+            }
+        }
+        if(gameVariant.equals("super")) {
+            return new SuperRules();
+        }
+        return new StdRules();
     }
 
     /**
