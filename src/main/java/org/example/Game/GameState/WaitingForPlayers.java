@@ -8,6 +8,12 @@ import org.example.Game.Player;
  */
 public class WaitingForPlayers implements GameState {
 
+    /**
+     * Called whenever the state is handled; checks if the game is full
+     * and transitions to the next state (GameStart) if so.
+     *
+     * @param game the game instance
+     */
     @Override
     public void handle(Game game) {
         if(game.getPlayers().size() == game.getMaxPlayers()) {
@@ -20,6 +26,12 @@ public class WaitingForPlayers implements GameState {
         }
     }
 
+    /**
+     * Adds a player to the game if it is not full.
+     *
+     * @param game   the game instance
+     * @param player the player to add
+     */
     @Override
     public void addPlayer(Game game, Player player) {
         if(game.getPlayers().size() < game.getMaxPlayers()) {
@@ -32,6 +44,16 @@ public class WaitingForPlayers implements GameState {
         handle(game);
     }
 
+    /**
+     * If a move is attempted while still waiting for players,
+     * it simply notifies that the game is not ready.
+     *
+     * @param game the game instance
+     * @param x1   the starting x-coordinate
+     * @param y1   the starting y-coordinate
+     * @param x2   the ending x-coordinate
+     * @param y2   the ending y-coordinate
+     */
     @Override
     public void play(Game game, int x1, int y1, int x2, int y2) {
         game.broadcastMessage("We are still waiting for players.");

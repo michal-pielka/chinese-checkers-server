@@ -6,7 +6,21 @@ import org.example.Game.GameRules.GameRules;
 import org.example.Server.States.InGameState;
 import org.example.Server.UserSession;
 
+/**
+ * Handles the 'create' command, allowing a user to create a new game lobby.
+ */
 public class CreateCommand implements Command {
+
+    /**
+     * Executes the create-game flow:
+     * 1. Prompts the user for a lobby name.
+     * 2. Checks for duplicate lobby names.
+     * 3. Prompts for number of players and game variant.
+     * 4. Creates the game, adds it to the server, and transitions the user to the InGameState.
+     *
+     * @param session The UserSession executing this command.
+     * @param args    The command arguments (not used directly here).
+     */
     @Override
     public void execute(UserSession session, String[] args) {
         System.out.println("User " + session.getPlayer().getName() + " chose to create a game.");
@@ -39,3 +53,4 @@ public class CreateCommand implements Command {
         session.setState(new InGameState(game));
     }
 }
+

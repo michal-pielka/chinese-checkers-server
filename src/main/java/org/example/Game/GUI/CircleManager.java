@@ -15,9 +15,20 @@ import java.util.List;
  * to the underlying player's ID in each Node.
  */
 public class CircleManager {
+
+    /**
+     * A list of all Circle objects representing nodes on the board.
+     */
     private final List<Circle> circles;
+
+    /**
+     * The radius (in pixels) for each circle (node).
+     */
     private final int radius;
 
+    /**
+     * Constructs a new CircleManager, initializing internal data structures.
+     */
     public CircleManager() {
         circles = new ArrayList<>();
         radius = 12;
@@ -27,6 +38,8 @@ public class CircleManager {
      * Creates all circles for the given board's nodes,
      * binds their color to the node's player ID,
      * and installs a tooltip showing coordinates and occupant.
+     *
+     * @param board The board whose nodes are to be visualized with circles.
      */
     public void initializeCircles(Board board) {
         for (Node node : board.getNodes().values()) {
@@ -86,7 +99,8 @@ public class CircleManager {
     }
 
     /**
-     * Whenever the node's player changes, update the circle's color in real time.
+     * Adds a listener to the node's player property, updating the circle color in real time
+     * whenever the occupant changes.
      */
     private void addNodeListener(Circle circle, Node node) {
         ChangeListener<Number> playerChangeListener = (observable, oldValue, newValue) -> {
@@ -105,7 +119,8 @@ public class CircleManager {
     }
 
     /**
-     * Show a tooltip "X:Y player: N" on hover, updating if the occupant changes.
+     * Adds a Tooltip that shows "X:Y player: N" on hover, updating
+     * when the player occupant changes.
      */
     private void addTooltip(Circle circle, Node node) {
         Tooltip tooltip = new Tooltip(node.getX() + ":" + node.getY() + " player: " + node.getPlayer());
@@ -118,7 +133,10 @@ public class CircleManager {
     }
 
     /**
-     * For a standard 2D layout, e.g., offset from top-left.
+     * Calculates the X-position for rendering this node in a 2D layout.
+     *
+     * @param node The node whose coordinates are being mapped.
+     * @return The calculated X screen coordinate.
      */
     private int calculateXPos(Node node) {
         int nodeX = node.getX();
@@ -127,11 +145,22 @@ public class CircleManager {
         return 400 + (nodeX - 4) * 2 * radius - nodeY * radius;
     }
 
+    /**
+     * Calculates the Y-position for rendering this node in a 2D layout.
+     *
+     * @param node The node whose coordinates are being mapped.
+     * @return The calculated Y screen coordinate.
+     */
     private int calculateYPos(Node node) {
         int nodeY = node.getY();
         return 100 + nodeY * 2 * radius;
     }
 
+    /**
+     * Retrieves the list of all Circle objects managed by this CircleManager.
+     *
+     * @return The list of circles.
+     */
     public List<Circle> getCircles() {
         return circles;
     }

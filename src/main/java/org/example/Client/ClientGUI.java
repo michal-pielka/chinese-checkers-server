@@ -8,11 +8,28 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * A JavaFX Application that connects to the server, displays a lobby,
+ * and transitions to an in-game UI when the game starts.
+ */
 public class ClientGUI extends Application {
 
+    /**
+     * The Client instance for sending commands to the server.
+     */
     private Client client;
+
+    /**
+     * The controller for the lobby UI.
+     */
     private LobbyController lobbyController;
 
+    /**
+     * Initializes the JavaFX stage, sets up the Client connection,
+     * and loads the LobbyController UI.
+     *
+     * @param primaryStage The primary stage for the JavaFX application.
+     */
     @Override
     public void start(Stage primaryStage) {
         try {
@@ -29,6 +46,7 @@ public class ClientGUI extends Application {
 
             client.startListening();
 
+            // For demonstration, immediately request a list of games
             client.sendToServer("list");
 
         } catch (IOException e) {
@@ -39,6 +57,12 @@ public class ClientGUI extends Application {
         }
     }
 
+    /**
+     * Called whenever a message is received from the server.
+     * Delegates handling to the LobbyController on the JavaFX thread.
+     *
+     * @param line The message from the server.
+     */
     private void onServerMessage(String line) {
         Platform.runLater(() -> {
             lobbyController.handleServerMessage(line);

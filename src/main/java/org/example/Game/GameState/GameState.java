@@ -9,7 +9,7 @@ import org.example.Game.Player;
 public interface GameState {
 
     /**
-     * Handles the current state logic.
+     * Handles any logic needed when the game enters or re-enters this state.
      *
      * @param game the game instance
      */

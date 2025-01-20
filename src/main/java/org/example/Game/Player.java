@@ -6,13 +6,21 @@ import java.io.PrintWriter;
  * Represents a player in the game.
  */
 public class Player {
+
+    /**
+     * A PrintWriter to send messages to this player.
+     */
     private PrintWriter outputWriter;
+
+    /**
+     * The player's name.
+     */
     private String playerName;
 
     /**
-     * Constructs a new Player with the specified name.
+     * Constructs a new Player with the specified name and output writer.
      *
-     * @param name the name of the player
+     * @param name   the name of the player
      * @param writer the outputWriter for the player
      */
     public Player(String name, PrintWriter writer) {
@@ -43,5 +51,7 @@ public class Player {
      *
      * @param name the name of the player
      */
-    public void setName(String name) {this.playerName = name;}
+    public void setName(String name) {
+        this.playerName = name;
+    }
 }

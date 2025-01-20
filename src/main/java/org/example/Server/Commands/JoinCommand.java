@@ -4,7 +4,21 @@ import org.example.Game.Game;
 import org.example.Server.States.InGameState;
 import org.example.Server.UserSession;
 
+/**
+ * Handles the 'join' command, allowing a user to join an existing game lobby.
+ */
 public class JoinCommand implements Command {
+
+    /**
+     * Executes the join-game flow:
+     * 1. Prompts the user for a player name.
+     * 2. Prompts the user for the lobby name to join.
+     * 3. Checks if the lobby exists and if it has space.
+     * 4. Joins the game and transitions the user to InGameState.
+     *
+     * @param session The UserSession executing this command.
+     * @param args    The command arguments (not used directly here).
+     */
     @Override
     public void execute(UserSession session, String[] args) {
         System.out.println("User " + session.getPlayer().getName() + " chose to join a game.");
@@ -41,3 +55,4 @@ public class JoinCommand implements Command {
         }
     }
 }
+

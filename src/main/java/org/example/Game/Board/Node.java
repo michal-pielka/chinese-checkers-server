@@ -8,13 +8,29 @@ import java.util.List;
 
 /**
  * Represents a node on the game board.
- * Each node has coordinates, a player, a base assignment, and connections to neighboring nodes.
+ * Each node has coordinates, a player occupant, and connections to neighboring nodes.
  */
 public class Node {
-     private final int x;
-     private final int y;
-     private final IntegerProperty player;
-     public List<Node> neighbours;
+
+    /**
+     * The x-coordinate of this node.
+     */
+    private final int x;
+
+    /**
+     * The y-coordinate of this node.
+     */
+    private final int y;
+
+    /**
+     * An IntegerProperty storing which player currently occupies this node (0 if unoccupied).
+     */
+    private final IntegerProperty player;
+
+    /**
+     * A list of neighboring nodes that are directly adjacent to this node.
+     */
+    public List<Node> neighbours;
 
     /**
      * Constructs a node with the specified coordinates.
@@ -58,9 +74,16 @@ public class Node {
         return player.get();
     }
 
+    /**
+     * Exposes the JavaFX IntegerProperty for the player occupant,
+     * allowing observers to bind and listen for changes.
+     *
+     * @return the IntegerProperty representing the occupant ID.
+     */
     public IntegerProperty playerProperty() {
         return player;
     }
+
     /**
      * Retrieves the x-coordinate of this node.
      *
@@ -79,3 +102,4 @@ public class Node {
         return y;
     }
 }
+

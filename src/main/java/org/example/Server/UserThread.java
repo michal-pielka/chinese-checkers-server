@@ -9,12 +9,35 @@ import java.util.Scanner;
  * Handles communication with a single client.
  */
 public class UserThread implements Runnable {
+
+    /**
+     * The client socket for this user connection.
+     */
     private final Socket socket;
+
+    /**
+     * Reference to the main server instance.
+     */
     private final Server server;
+
+    /**
+     * Reads input from the client.
+     */
     private Scanner inputReader;
+
+    /**
+     * Sends output to the client.
+     */
     private PrintWriter outputWriter;
 
+    /**
+     * Manages this user's session (commands, state, etc.).
+     */
     private UserSession userSession;
+
+    /**
+     * Manages the creation of UserSession objects.
+     */
     private final UserManager userManager;
 
     /**
@@ -50,6 +73,7 @@ public class UserThread implements Runnable {
 
     /**
      * Entry point for the user thread.
+     * Continuously reads client input and delegates commands to the UserSession.
      */
     @Override
     public void run() {
@@ -87,3 +111,4 @@ public class UserThread implements Runnable {
         }
     }
 }
+

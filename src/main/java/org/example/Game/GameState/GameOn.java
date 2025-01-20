@@ -8,6 +8,11 @@ import org.example.Game.GameRules.GameRules;
  */
 public class GameOn implements GameState {
 
+    /**
+     * Informs all players whose turn it is.
+     *
+     * @param game the game instance
+     */
     @Override
     public void handle(Game game) {
         // Announce whose turn it is (by username)
@@ -15,11 +20,27 @@ public class GameOn implements GameState {
         game.broadcastMessage("It is " + currentPlayerName + "'s turn to move.");
     }
 
+    /**
+     * No players can be added once the game is ongoing.
+     *
+     * @param game   the game instance
+     * @param player the player to add
+     */
     @Override
     public void addPlayer(Game game, org.example.Game.Player player) {
         System.out.println("Game is on. Cannot add player.");
     }
 
+    /**
+     * Processes a move in the ongoing game state:
+     * checks validity, performs the move, checks for a win, and ends turn.
+     *
+     * @param game the game instance
+     * @param x1   the starting x-coordinate
+     * @param y1   the starting y-coordinate
+     * @param x2   the ending x-coordinate
+     * @param y2   the ending y-coordinate
+     */
     @Override
     public void play(Game game, int x1, int y1, int x2, int y2) {
         GameRules rules = game.getRules();

@@ -10,16 +10,16 @@ import java.util.Set;
  * Standard implementation of the game rules.
  * Handles validation of moves and determines winning conditions.
  */
-public class StdRules implements GameRules{
+public class StdRules implements GameRules {
 
     /**
      * Finds all valid jump destinations from the given starting node.
      *
      * @param board the game board.
-     * @param x X position of starting node.
-     * @param y Y position of starting node
+     * @param x     X position of starting node.
+     * @param y     Y position of starting node
      * @param visited nodes already visited (new HashSet<> for default usage).
-     * @return a set of nodes that can be jumped to.
+     * @return a set of node keys (x:y) that can be jumped to.
      */
     public Set<String> findJumps(Board board, int x, int y, Set<String> visited) {
         String currKey = x + ":" + y;
@@ -44,6 +44,18 @@ public class StdRules implements GameRules{
         return visited;
     }
 
+    /**
+     * Checks whether a move is valid according to standard rules:
+     * single-step adjacency or multi-step jumps.
+     *
+     * @param board  the game board on which the move is being made.
+     * @param player the player attempting the move.
+     * @param x1     the x-coordinate of the starting position.
+     * @param y1     the y-coordinate of the starting position.
+     * @param x2     the x-coordinate of the destination position.
+     * @param y2     the y-coordinate of the destination position.
+     * @return true if the move is valid, false otherwise.
+     */
     @Override
     public boolean isMoveValid(Board board, int player, int x1, int y1, int x2, int y2) {
         String key1 = x1 + ":" + y1;
@@ -60,10 +72,12 @@ public class StdRules implements GameRules{
                 return false;
             }
 
+            // Single-step adjacency
             if(node1.neighbours.contains(node2) && node2.getPlayer()==0) {
                 return true;
             }
             else {
+                // Multi-step jumps
                 Set<String> possibleJumps = findJumps(board, x1, y1, new HashSet<>());
                 return possibleJumps.contains(key2);
             }
@@ -71,6 +85,13 @@ public class StdRules implements GameRules{
         return false;
     }
 
+    /**
+     * Checks if the specified player has all of their pieces in their target base.
+     *
+     * @param board  the game board.
+     * @param player the player to check for a win.
+     * @return true if the player has won, false otherwise.
+     */
     @Override
     public boolean checkForWin(Board board, int player) {
         List<String> targetBase = board.getTargetBase(player);

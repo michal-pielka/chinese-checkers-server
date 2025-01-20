@@ -8,6 +8,10 @@ import java.util.Scanner;
  * Manages user sessions, creation, and related functionalities.
  */
 public class UserManager {
+
+    /**
+     * Reference to the Server managing games.
+     */
     private final Server server;
 
     /**
@@ -32,3 +36,4 @@ public class UserManager {
 
     // Additional management methods can be added here if needed in the future
 }
+

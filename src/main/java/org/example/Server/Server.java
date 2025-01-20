@@ -15,9 +15,25 @@ import java.util.concurrent.Executors;
  * Encapsulates the core server logic.
  */
 public class Server {
+
+    /**
+     * The port on which the server will listen for connections.
+     */
     private int port;
+
+    /**
+     * The size of the thread pool for handling client connections.
+     */
     private int threadPoolSize;
+
+    /**
+     * The thread pool used to manage client handler threads.
+     */
     private ExecutorService pool;
+
+    /**
+     * A synchronized list of active games.
+     */
     private final List<Game> games;
 
     /**
@@ -119,3 +135,4 @@ public class Server {
         }
     }
 }
+

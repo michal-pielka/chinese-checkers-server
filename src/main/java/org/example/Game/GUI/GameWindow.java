@@ -13,27 +13,54 @@ import org.example.Client.Client;
  */
 public class GameWindow {
 
+    /**
+     * A reference to the Client object, allowing sending of commands.
+     */
     private final Client client;
-    private final Board localBoard;  // copy of the board for local updates
-    private final int myPlayerId;    // which player is this client?
-    private final String myPlayerName; // the username for this client
 
+    /**
+     * A local copy of the game board for visual updates.
+     */
+    private final Board localBoard;
+
+    /**
+     * The 1-based ID of the current player using this GUI.
+     */
+    private final int myPlayerId;
+
+    /**
+     * The username for this client.
+     */
+    private final String myPlayerName;
+
+    /**
+     * Manages Circle objects (one per node) and their color bindings.
+     */
     private final CircleManager circleManager;
 
-    // Track the selected start coordinate
+    /**
+     * Tracks the selected start coordinate (if any) during a move.
+     */
     private String selectedStart = null;
 
-    // The JavaFX Stage for this game window
+    /**
+     * The JavaFX Stage displaying the game window.
+     */
     private Stage stage;
 
     /**
      * Constructor that includes both the player's ID and username.
+     *
+     * @param client       The Client instance to send commands to the server.
+     * @param board        A local copy of the board to display.
+     * @param myPlayerId   The 1-based ID of the current player.
+     * @param myPlayerName The username of the current player.
      */
     public GameWindow(Client client, Board board, int myPlayerId, String myPlayerName) {
         this.client = client;
         this.localBoard = board;
         this.myPlayerId = myPlayerId;
-        this.myPlayerName = myPlayerName; // <-- store the actual name
+        this.myPlayerName = myPlayerName;
 
         // Create the CircleManager
         circleManager = new CircleManager();
@@ -55,15 +82,17 @@ public class GameWindow {
 
         Scene scene = new Scene(pane, 800, 600);
         stage.setScene(scene);
-        
+
         // Instead of "Player 1" or "Player 2", we show the actual username
         stage.setTitle("Chinese Checkers - " + myPlayerName);
         stage.show();
     }
 
     /**
-     * Called from your client or lobby code whenever the server
+     * Called from the client code whenever the server
      * sends a line relevant to the in-game phase.
+     *
+     * @param line The message line from the server.
      */
     public void handleServerMessage(String line) {
         // If it says "Moved from x1:y1 to x2:y2", parse and update
@@ -85,7 +114,10 @@ public class GameWindow {
     }
 
     /**
-     * When the user clicks a circle, decide if it's the start or the end of a move.
+     * When the user clicks a circle, decide if it's the start or the end of a move,
+     * and send the move command to the server if both are selected.
+     *
+     * @param circle The clicked Circle object.
      */
     private void handleCircleClick(Circle circle) {
         String coords = (String) circle.getProperties().get("coords");
@@ -115,6 +147,9 @@ public class GameWindow {
     /**
      * After the server announces "Moved from X to Y", update localBoard
      * so that CircleManager re-colors accordingly.
+     *
+     * @param startPos The starting coordinate (e.g., "4:3").
+     * @param endPos   The ending coordinate (e.g., "5:4").
      */
     private void updateLocalBoardMove(String startPos, String endPos) {
         String[] sParts = startPos.split(":");
@@ -131,6 +166,12 @@ public class GameWindow {
         }
     }
 
+    /**
+     * Highlights or un-highlights a circle visually (e.g., using stroke color).
+     *
+     * @param circle   The circle to highlight.
+     * @param highlight Whether to apply highlight (true) or remove it (false).
+     */
     private void highlightCircle(Circle circle, boolean highlight) {
         if (highlight) {
             circle.setStroke(javafx.scene.paint.Color.YELLOW);
@@ -141,6 +182,11 @@ public class GameWindow {
         }
     }
 
+    /**
+     * Unhighlights a circle by its coordinate key, removing any visual highlight.
+     *
+     * @param coords The "x:y" coordinate string for the node.
+     */
     private void unhighlightCircle(String coords) {
         // Loop all circles to find the one with matching coords
         for (Circle c : circleManager.getCircles()) {

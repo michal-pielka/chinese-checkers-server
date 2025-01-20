@@ -12,8 +12,19 @@ import org.example.Game.GUI.GameWindow;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Manages the lobby UI, displaying available games, allowing creation/joining,
+ * and transitioning the user to the in-game window when appropriate.
+ */
 public class LobbyController {
 
+    /**
+     * Represents the phases of this client's experience:
+     * LOBBY - viewing the lobby list,
+     * CREATING_GAME - in the process of creating a new game,
+     * JOINING_GAME - in the process of joining an existing game,
+     * IN_GAME - already in a game window.
+     */
     private enum ClientFlow {
         LOBBY,
         CREATING_GAME,
@@ -21,20 +32,52 @@ public class LobbyController {
         IN_GAME
     }
 
+    /**
+     * Tracks the current flow/state of the lobby controller.
+     */
     private ClientFlow currentFlow = ClientFlow.LOBBY;
 
+    /**
+     * The Client instance to communicate with the server.
+     */
     private final Client client;
+
+    /**
+     * The root container for the lobby UI.
+     */
     private final BorderPane root;
 
-    // UI
+    /**
+     * Displays the list of available games.
+     */
     private final ListView<String> gamesListView;
+
+    /**
+     * Shows messages/responses from the server.
+     */
     private final TextArea serverMessagesArea;
+
+    /**
+     * Button to create a new game.
+     */
     private final Button createButton;
+
+    /**
+     * Button to join a selected game.
+     */
     private final Button joinButton;
+
+    /**
+     * Button to refresh the game list.
+     */
     private final Button refreshButton;
 
+    /**
+     * Holds the server-provided list of game descriptions.
+     */
     private final List<String> games = new ArrayList<>();
 
+    // Data for create/join flows
     private String createUsername;
     private String createLobbyName;
     private int createNumPlayers;
@@ -46,8 +89,16 @@ public class LobbyController {
     private String myPlayerName;
     private int myPlayerId = 0;
 
+    /**
+     * The in-game window after the lobby flow is complete.
+     */
     private GameWindow gameWindow;
 
+    /**
+     * Constructs a new LobbyController with references to the client.
+     *
+     * @param client The Client instance used to communicate with the server.
+     */
     public LobbyController(Client client) {
         this.client = client;
         root = new BorderPane();
@@ -82,7 +133,7 @@ public class LobbyController {
             }
             String selected = gamesListView.getSelectionModel().getSelectedItem();
             int spaceIndex = selected.indexOf(" ");
-            String extractedLobby = (spaceIndex>0) ? selected.substring(0, spaceIndex) : selected;
+            String extractedLobby = (spaceIndex > 0) ? selected.substring(0, spaceIndex) : selected;
             joinLobbyName = extractedLobby.trim();
 
             showJoinGameDialog();
@@ -99,10 +150,20 @@ public class LobbyController {
         root.setTop(topBar);
     }
 
+    /**
+     * Retrieves the root BorderPane of this lobby UI.
+     *
+     * @return the root container.
+     */
     public BorderPane getRoot() {
         return root;
     }
 
+    /**
+     * Handles incoming messages from the server, updating the UI or transitioning state as needed.
+     *
+     * @param line The message from the server.
+     */
     public void handleServerMessage(String line) {
         if (currentFlow == ClientFlow.IN_GAME && gameWindow != null) {
             gameWindow.handleServerMessage(line);
@@ -119,7 +180,7 @@ public class LobbyController {
         }
         // 2) If the server says "Added player number X YYY"
         else if (line.startsWith("Added player number ")) {
-            String[] tokens = line.split("\\s+"); 
+            String[] tokens = line.split("\\s+");
             if (tokens.length >= 5) {
                 int assignedId = 0;
                 try {
@@ -195,12 +256,17 @@ public class LobbyController {
         }
     }
 
-    // Show the updated game list
+    /**
+     * Updates the gamesListView with the current list of games.
+     */
     private void refreshGameList() {
         gamesListView.getItems().setAll(games);
     }
 
-    // Create game
+    /**
+     * Shows a dialog to gather information about the new game to create,
+     * storing the input in fields if the user confirms.
+     */
     private void showCreateGameDialog() {
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Create Game");
@@ -247,7 +313,10 @@ public class LobbyController {
         dialog.showAndWait();
     }
 
-    // Join game
+    /**
+     * Shows a dialog to gather information about joining a game,
+     * storing the input in fields if the user confirms.
+     */
     private void showJoinGameDialog() {
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Join Game");
@@ -276,7 +345,11 @@ public class LobbyController {
         dialog.showAndWait();
     }
 
-    // Transition to in-game
+    /**
+     * Opens the in-game window once the game is determined to be full.
+     *
+     * @param finalGamePlayers The final number of players in the game.
+     */
     private void openGameWindow(int finalGamePlayers) {
         Board board = new StdBoard(finalGamePlayers);
         int finalId = (myPlayerId > 0 ? myPlayerId : 1);
@@ -287,8 +360,14 @@ public class LobbyController {
         currentFlow = ClientFlow.IN_GAME;
     }
 
+    /**
+     * Shows an error dialog with the specified message.
+     *
+     * @param msg The message to display.
+     */
     private void showErrorDialog(String msg) {
         Alert alert = new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK);
         alert.showAndWait();
     }
 }
+

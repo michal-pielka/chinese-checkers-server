@@ -13,19 +13,39 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 /**
- * Encapsulates the game-related logic, state transitions, 
+ * Encapsulates the game-related logic, state transitions,
  * and user interactions (prompts) for a single connected user.
  */
 public class UserSession {
+
+    /**
+     * Reference to the main server instance for game lookups and creation.
+     */
     private final Server server;
+
+    /**
+     * A PrintWriter for sending messages back to this user/client.
+     */
     private final PrintWriter outputWriter;
+
+    /**
+     * A Scanner for reading user commands from the client.
+     */
     private final Scanner inputReader;
+
+    /**
+     * The Player object associated with this session.
+     */
     private final Player player;
 
-    // The user's current state (Lobby, InGame, etc.)
+    /**
+     * The user's current state (e.g., Lobby, InGame, etc.).
+     */
     private UserState state;
 
-    // Flag to indicate if the session is active
+    /**
+     * Flag to indicate whether the session is active.
+     */
     private volatile boolean active;
 
     /**
@@ -70,14 +90,16 @@ public class UserSession {
      * @param newState The new state to set.
      */
     public void setState(UserState newState) {
-        System.out.println("Transitioning user " + player.getName() + " from " 
-                           + state.getClass().getSimpleName() + " to " 
+        System.out.println("Transitioning user " + player.getName() + " from "
+                           + state.getClass().getSimpleName() + " to "
                            + newState.getClass().getSimpleName());
         this.state = newState;
     }
 
     /**
      * Gets the currently logged-in Player instance.
+     *
+     * @return The Player object for this session.
      */
     public Player getPlayer() {
         return player;
@@ -85,6 +107,8 @@ public class UserSession {
 
     /**
      * Gets the Server reference for game lookups, game creation, etc.
+     *
+     * @return The Server instance associated with this session.
      */
     public Server getServer() {
         return server;
@@ -92,15 +116,23 @@ public class UserSession {
 
     /**
      * Gets the current state of the user.
+     *
+     * @return The current UserState instance.
      */
     public UserState getState() {
         return this.state;
     }
 
     // ----------------------------------------------------------------------
-    // Methods to facilitate user interactions (now called by Command classes)
+    // Methods to facilitate user interactions (called by Command classes)
     // ----------------------------------------------------------------------
 
+    /**
+     * Repeatedly prompts the user to enter a lobby name until a non-empty
+     * name is provided. Returns the chosen lobby name.
+     *
+     * @return A non-empty lobby name.
+     */
     public String askForLobbyName() {
         String lobbyName = null;
         while (lobbyName == null || lobbyName.isEmpty()) {
@@ -119,9 +151,15 @@ public class UserSession {
         return lobbyName;
     }
 
+    /**
+     * Repeatedly prompts the user to choose a game variant ("std" or "super").
+     * Returns the corresponding GameRules object.
+     *
+     * @return A GameRules instance (StdRules or SuperRules).
+     */
     public GameRules askForGameVariant() {
         String gameVariant = null;
-        while (gameVariant==null || (!gameVariant.equals("std") && !gameVariant.equals("super"))) {
+        while (gameVariant == null || (!gameVariant.equals("std") && !gameVariant.equals("super"))) {
             sendMessage("Please input 'Std' for standard game variant or 'Super' for super game variant.");
             if(inputReader.hasNextLine()) {
                 gameVariant = inputReader.nextLine().trim().toLowerCase();
@@ -144,6 +182,11 @@ public class UserSession {
         sendMessage("Welcome! Use one of the following commands: join, create, list, quit");
     }
 
+    /**
+     * Repeatedly prompts for the number of players until a valid number (2, 3, 4, or 6) is provided.
+     *
+     * @return The chosen number of players.
+     */
     public int askForNumberOfPlayers() {
         int number = 0;
         while (number != 2 && number != 3 && number != 4 && number != 6) {
@@ -170,6 +213,11 @@ public class UserSession {
         return number;
     }
 
+    /**
+     * Repeatedly prompts for a player name until a non-empty name is provided.
+     *
+     * @return The chosen player name.
+     */
     public String askForPlayerName() {
         String playerName = null;
         while (playerName == null || playerName.isEmpty()) {
@@ -205,3 +253,4 @@ public class UserSession {
         return active;
     }
 }
+

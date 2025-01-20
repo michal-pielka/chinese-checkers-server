@@ -9,6 +9,11 @@ import java.util.Random;
  */
 public class GameStart implements GameState {
 
+    /**
+     * Randomly picks a starting player and transitions to GameOn.
+     *
+     * @param game the game instance
+     */
     @Override
     public void handle(Game game) {
         // Randomly pick a starting player index
@@ -25,12 +30,27 @@ public class GameStart implements GameState {
         game.getState().handle(game);
     }
 
+    /**
+     * No more players can be added once the game is starting.
+     *
+     * @param game   the game instance
+     * @param player the player to add
+     */
     @Override
     public void addPlayer(Game game, org.example.Game.Player player) {
         // No more adding players once we've started
         game.broadcastMessage("Game is full. Cannot add new players.");
     }
 
+    /**
+     * Not valid at this stage; the game will start momentarily.
+     *
+     * @param game the game instance
+     * @param x1   the starting x-coordinate
+     * @param y1   the starting y-coordinate
+     * @param x2   the ending x-coordinate
+     * @param y2   the ending y-coordinate
+     */
     @Override
     public void play(Game game, int x1, int y1, int x2, int y2) {
         // Not valid at this stage

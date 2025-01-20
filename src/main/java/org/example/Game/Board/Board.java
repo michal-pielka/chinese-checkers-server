@@ -26,6 +26,11 @@ public interface Board {
      */
     Node getNode(String key);
 
+    /**
+     * Retrieves the map of all nodes in the board, keyed by "x:y".
+     *
+     * @return a map of node keys to Node objects.
+     */
     Map<String,Node> getNodes();
 
     /**
@@ -36,8 +41,20 @@ public interface Board {
      */
     boolean containsNode(String key);
 
-
+    /**
+     * Retrieves the target base for the specified player.
+     *
+     * @param player the 1-based player ID
+     * @return a list of node keys that represent the player's target base
+     */
     List<String> getTargetBase(int player);
 
+    /**
+     * Determines if a given node key is within the target base of the specified player.
+     *
+     * @param player the 1-based player ID
+     * @param key    the node key in the format "x:y"
+     * @return true if the node is in the player's target base, false otherwise
+     */
     boolean inTargetBase(int player, String key);
 }

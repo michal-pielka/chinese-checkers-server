@@ -10,12 +10,40 @@ import java.util.ArrayList;
  * Represents a game session, managing players, the board, game rules, and state transitions.
  */
 public class Game {
+
+    /**
+     * The name of the game lobby.
+     */
     String lobbyName;
+
+    /**
+     * The list of players participating in the game.
+     */
     ArrayList<Player> players;
+
+    /**
+     * The index of the current player in the players list.
+     */
     int currentPlayer;
+
+    /**
+     * The maximum number of players allowed in the game.
+     */
     int maxPlayers;
+
+    /**
+     * The game board.
+     */
     Board board;
+
+    /**
+     * The current state of the game (e.g., waiting for players, in progress, etc.).
+     */
     GameState state;
+
+    /**
+     * The rules of the game (standard or super).
+     */
     GameRules rules;
 
     /**
@@ -28,7 +56,7 @@ public class Game {
      */
     public Game(String name, int playerCount, Board board, GameRules rules) {
         this.lobbyName = name;
-        this. maxPlayers = playerCount;
+        this.maxPlayers = playerCount;
         players = new ArrayList<>();
         this.board = board;
         state = new WaitingForPlayers();
@@ -124,14 +152,18 @@ public class Game {
      *
      * @return the game board
      */
-    public Board getBoard() { return board; }
+    public Board getBoard() {
+        return board;
+    }
 
     /**
      * Gets the game rules.
      *
      * @return the game rules
      */
-    public GameRules getRules() {return rules; }
+    public GameRules getRules() {
+        return rules;
+    }
 
     /**
      * Processes a move attempt by a player.
@@ -155,6 +187,6 @@ public class Game {
      * Ends the current player's turn and advances to the next player.
      */
     public void endTurn() {
-        currentPlayer=(currentPlayer + 1) % maxPlayers;
+        currentPlayer = (currentPlayer + 1) % maxPlayers;
     }
 }

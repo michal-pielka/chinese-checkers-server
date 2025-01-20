@@ -8,6 +8,10 @@ import java.util.Map;
  * Manages nodes and their connections.
  */
 public class Graph {
+
+    /**
+     * A map of node keys ("x:y") to Node objects.
+     */
     Map<String, Node> nodes;
 
     /**
@@ -82,7 +86,13 @@ public class Graph {
         return x + ":" + y;
     }
 
+    /**
+     * Retrieves the entire map of nodes in this graph.
+     *
+     * @return a Map of node keys to Node objects.
+     */
     public Map<String,Node> getNodes() {
         return nodes;
     }
 }
+
