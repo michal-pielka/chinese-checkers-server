@@ -11,7 +11,7 @@ public class WaitingForPlayers implements GameState {
     @Override
     public void handle(Game game) {
         if(game.getPlayers().size() == game.getMaxPlayers()) {
-            game.broadcastMessage("Game full. Lets start.");
+            game.broadcastMessage("Game full. Lets start. " + game.getMaxPlayers());
             game.setState(new GameStart());
             game.getState().handle(game);
         }

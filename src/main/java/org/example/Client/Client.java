@@ -14,7 +14,6 @@ public class Client {
     private Scanner inputReader;
     private PrintWriter outputWriter;
 
-    // We'll allow our GUI to register a handler (callback) for server messages:
     private volatile MessageHandler messageHandler;
     public interface MessageHandler {
         void onServerMessage(String line);
@@ -27,17 +26,14 @@ public class Client {
         System.out.println("Connected to server: " + host + ":" + port);
     }
 
-    // Let the GUI set a callback
     public void setMessageHandler(MessageHandler handler) {
         this.messageHandler = handler;
     }
 
-    // A method the GUI can use to send a line to the server
     public void sendToServer(String line) {
         outputWriter.println(line);
     }
 
-    // Start a background thread reading from server -> call messageHandler
     public void startListening() {
         Thread t = new Thread(() -> {
             try {

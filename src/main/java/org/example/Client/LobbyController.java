@@ -2,87 +2,97 @@ package org.example.Client;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.stage.Stage;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import org.example.Game.Board.Board;
+import org.example.Game.Board.StdBoard;
+import org.example.Game.GUI.GameWindow;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class LobbyController {
 
+    private enum ClientFlow {
+        LOBBY,
+        CREATING_GAME,
+        JOINING_GAME,
+        IN_GAME
+    }
+
+    private ClientFlow currentFlow = ClientFlow.LOBBY;
+
     private final Client client;
     private final BorderPane root;
 
+    // UI
     private final ListView<String> gamesListView;
     private final TextArea serverMessagesArea;
     private final Button createButton;
     private final Button joinButton;
     private final Button refreshButton;
 
-    // We'll keep track of lines we receive that start with "Available Games:"
     private final List<String> games = new ArrayList<>();
 
-    // Flow states for the creation/join sequence
-    private enum ClientFlow { IDLE, CREATING_GAME, JOINING_GAME }
-    private ClientFlow currentFlow = ClientFlow.IDLE;
-
-    // Data for creating a game
     private String createUsername;
     private String createLobbyName;
     private int createNumPlayers;
     private String createVariant;
 
-    // Data for joining a game
     private String joinUsername;
     private String joinLobbyName;
+
+    private String myPlayerName;
+    private int myPlayerId = 0;
+
+    private GameWindow gameWindow;
 
     public LobbyController(Client client) {
         this.client = client;
         root = new BorderPane();
 
-        // Center: list of games
         gamesListView = new ListView<>();
         root.setCenter(gamesListView);
 
-        // Bottom: text area for server messages
         serverMessagesArea = new TextArea();
         serverMessagesArea.setEditable(false);
         serverMessagesArea.setPrefRowCount(8);
         root.setBottom(serverMessagesArea);
 
-        // Top: buttons for create/join/refresh
         HBox topBar = new HBox(10);
         topBar.setPadding(new Insets(10));
         createButton = new Button("Create");
+        joinButton = new Button("Join");
+        refreshButton = new Button("Refresh");
+
         createButton.setOnAction(e -> {
-            showCreateGameDialog(); 
-            // If the user actually entered a lobby name, proceed
+            showCreateGameDialog();
             if (createLobbyName != null && !createLobbyName.isEmpty()) {
+                myPlayerName = createUsername;
                 currentFlow = ClientFlow.CREATING_GAME;
                 client.sendToServer("create");
             }
         });
 
-        joinButton = new Button("Join");
         joinButton.setOnAction(e -> {
-            // Must select a game from the list first
             if (gamesListView.getSelectionModel().getSelectedItem() == null) {
-                showErrorDialog("Please select a game to join first!");
+                showErrorDialog("Select a game first!");
                 return;
             }
-            // E.g., parse out the lobby name from the selected item:
             String selected = gamesListView.getSelectionModel().getSelectedItem();
             int spaceIndex = selected.indexOf(" ");
-            String extractedLobby = (spaceIndex > 0) ? selected.substring(0, spaceIndex) : selected;
+            String extractedLobby = (spaceIndex>0) ? selected.substring(0, spaceIndex) : selected;
             joinLobbyName = extractedLobby.trim();
 
             showJoinGameDialog();
             if (joinUsername != null && !joinUsername.isEmpty()) {
+                myPlayerName = joinUsername; // store
                 currentFlow = ClientFlow.JOINING_GAME;
                 client.sendToServer("join");
             }
         });
 
-        refreshButton = new Button("Refresh");
         refreshButton.setOnAction(e -> client.sendToServer("list"));
 
         topBar.getChildren().addAll(createButton, joinButton, refreshButton);
@@ -93,29 +103,53 @@ public class LobbyController {
         return root;
     }
 
-    /**
-     * Handle each line from the server: update the UI or respond to prompts 
-     * depending on the flow (creating/joining).
-     */
     public void handleServerMessage(String line) {
+        if (currentFlow == ClientFlow.IN_GAME && gameWindow != null) {
+            gameWindow.handleServerMessage(line);
+            return;
+        }
+
         serverMessagesArea.appendText(line + "\n");
 
-        // If the server is listing games:
         if (line.startsWith("Available Games:")) {
             games.clear();
-        }
-        else if (line.startsWith("- ")) {
+        } else if (line.startsWith("- ")) {
             games.add(line.substring(2).trim());
             refreshGameList();
         }
-        // If the server says the game is full => open the game window
-        else if (line.contains("Game full. Lets start.")) {
-            openGameGUIWindow();
+        // 2) If the server says "Added player number X YYY"
+        else if (line.startsWith("Added player number ")) {
+            String[] tokens = line.split("\\s+"); 
+            if (tokens.length >= 5) {
+                int assignedId = 0;
+                try {
+                    assignedId = Integer.parseInt(tokens[3]);
+                } catch (NumberFormatException ignored) { }
+                String assignedName = tokens[4];
+                if (myPlayerName != null && myPlayerName.equals(assignedName)) {
+                    myPlayerId = assignedId;
+                    System.out.println("My assigned player ID = " + myPlayerId);
+                }
+            }
         }
 
-        // ---------------------------
-        // FLOW: CREATING A NEW GAME
-        // ---------------------------
+        else if (line.startsWith("Game full. Lets start.")) {
+            String[] parts = line.split("\\s+");
+            int finalGamePlayers = 2;
+
+            if (parts.length >= 5) {
+                try {
+                    finalGamePlayers = Integer.parseInt(parts[4]);
+                } catch (NumberFormatException ignored) {
+                }
+            }
+
+            openGameWindow(finalGamePlayers);
+            currentFlow = ClientFlow.IN_GAME;
+            return;
+        }
+
+        // 4) Handle create flow
         if (currentFlow == ClientFlow.CREATING_GAME) {
             if (line.contains("Please input your lobby name:")) {
                 client.sendToServer(createLobbyName);
@@ -130,21 +164,15 @@ public class LobbyController {
                 client.sendToServer(createUsername);
             }
             else if (line.contains("A game with lobby name")) {
-                // The server says the lobby already exists
-                showErrorDialog("That lobby name already exists. Try another name.");
-                currentFlow = ClientFlow.IDLE;
+                showErrorDialog("That lobby name already exists!");
+                currentFlow = ClientFlow.LOBBY;
             }
             else if (line.contains("joined their own created game")) {
-                // That means the creation was successful
-                currentFlow = ClientFlow.IDLE;
-                // Optionally refresh the list so we see the newly created game
+                currentFlow = ClientFlow.LOBBY;
                 client.sendToServer("list");
             }
         }
-
-        // ---------------------------
-        // FLOW: JOINING A GAME
-        // ---------------------------
+        // 5) Handle join flow
         else if (currentFlow == ClientFlow.JOINING_GAME) {
             if (line.contains("Please input your player name:")) {
                 client.sendToServer(joinUsername);
@@ -153,28 +181,26 @@ public class LobbyController {
                 client.sendToServer(joinLobbyName);
             }
             else if (line.contains("Cannot find game with lobby name")) {
-                showErrorDialog("Cannot find game: " + joinLobbyName);
-                currentFlow = ClientFlow.IDLE;
+                showErrorDialog("Cannot find lobby: " + joinLobbyName);
+                currentFlow = ClientFlow.LOBBY;
             }
             else if (line.contains("Game '" + joinLobbyName + "' is full")) {
                 showErrorDialog("That game is full!");
-                currentFlow = ClientFlow.IDLE;
+                currentFlow = ClientFlow.LOBBY;
             }
             else if (line.contains("joined game '" + joinLobbyName + "'")) {
-                // success
-                currentFlow = ClientFlow.IDLE;
-                // Possibly do "list" again
+                currentFlow = ClientFlow.LOBBY;
+                client.sendToServer("list");
             }
         }
     }
 
+    // Show the updated game list
     private void refreshGameList() {
         gamesListView.getItems().setAll(games);
     }
 
-    // --------------------------------------------------------
-    // DIALOGS FOR "CREATE" AND "JOIN" (fills in class fields)
-    // --------------------------------------------------------
+    // Create game
     private void showCreateGameDialog() {
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Create Game");
@@ -198,22 +224,18 @@ public class LobbyController {
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.add(userLabel, 0, 0);
-        grid.add(userField, 1, 0);
-        grid.add(lobbyLabel, 0, 1);
-        grid.add(lobbyField, 1, 1);
-        grid.add(playersLabel, 0, 2);
-        grid.add(playersBox, 1, 2);
-        grid.add(variantLabel, 0, 3);
-        grid.add(variantBox, 1, 3);
+        grid.add(userLabel, 0, 0);  grid.add(userField, 1, 0);
+        grid.add(lobbyLabel, 0, 1); grid.add(lobbyField, 1, 1);
+        grid.add(playersLabel, 0, 2); grid.add(playersBox, 1, 2);
+        grid.add(variantLabel, 0, 3); grid.add(variantBox, 1, 3);
 
         dialog.getDialogPane().setContent(grid);
 
-        ButtonType okButtonType = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
+        ButtonType okBtn = new ButtonType("Create", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(okBtn, ButtonType.CANCEL);
 
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == okButtonType) {
+        dialog.setResultConverter(btn -> {
+            if (btn == okBtn) {
                 createUsername = userField.getText().trim();
                 createLobbyName = lobbyField.getText().trim();
                 createNumPlayers = playersBox.getValue();
@@ -225,6 +247,7 @@ public class LobbyController {
         dialog.showAndWait();
     }
 
+    // Join game
     private void showJoinGameDialog() {
         Dialog<Void> dialog = new Dialog<>();
         dialog.setTitle("Join Game");
@@ -240,11 +263,11 @@ public class LobbyController {
 
         dialog.getDialogPane().setContent(grid);
 
-        ButtonType okButtonType = new ButtonType("Join", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(okButtonType, ButtonType.CANCEL);
+        ButtonType okBtn = new ButtonType("Join", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(okBtn, ButtonType.CANCEL);
 
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == okButtonType) {
+        dialog.setResultConverter(btn -> {
+            if (btn == okBtn) {
                 joinUsername = userField.getText().trim();
             }
             return null;
@@ -253,15 +276,19 @@ public class LobbyController {
         dialog.showAndWait();
     }
 
-    private void showErrorDialog(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
-        alert.showAndWait();
+    // Transition to in-game
+    private void openGameWindow(int finalGamePlayers) {
+        Board board = new StdBoard(finalGamePlayers);
+        int finalId = (myPlayerId > 0 ? myPlayerId : 1);
+
+        gameWindow = new GameWindow(client, board, finalId, myPlayerName);
+        gameWindow.show();
+
+        currentFlow = ClientFlow.IN_GAME;
     }
 
-    private void openGameGUIWindow() {
-        // For now, just show an alert or placeholder
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, 
-            "Game is full. Opening game window now!", ButtonType.OK);
+    private void showErrorDialog(String msg) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK);
         alert.showAndWait();
     }
 }

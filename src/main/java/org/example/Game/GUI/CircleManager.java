@@ -10,9 +10,12 @@ import org.example.Game.Board.Node;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Manages circles for each node on the board, including color bindings
+ * to the underlying player's ID in each Node.
+ */
 public class CircleManager {
-    List<Circle> circles;
+    private final List<Circle> circles;
     private final int radius;
 
     public CircleManager() {
@@ -20,87 +23,78 @@ public class CircleManager {
         radius = 12;
     }
 
+    /**
+     * Creates all circles for the given board's nodes,
+     * binds their color to the node's player ID,
+     * and installs a tooltip showing coordinates and occupant.
+     */
     public void initializeCircles(Board board) {
-        for(Node node : board.getNodes().values()) {
+        for (Node node : board.getNodes().values()) {
             Circle circle = new Circle();
             circle.setRadius(radius);
             circle.setCenterX(calculateXPos(node));
             circle.setCenterY(calculateYPos(node));
+
+            // Store the coords in the circle's properties map
+            String coords = node.getX() + ":" + node.getY();
+            circle.getProperties().put("coords", coords);
+
             initColors(circle, node);
             addNodeListener(circle, node);
             addTooltip(circle, node);
 
             circles.add(circle);
         }
-
     }
 
+    /**
+     * Assign initial color/stroke based on node's player occupant.
+     */
     private void initColors(Circle circle, Node node) {
         int player = node.getPlayer();
         switch (player) {
-            case 1:
+            case 1 -> {
                 circle.setFill(Color.BLUE);
                 circle.setStroke(Color.BLUE);
-                circle.setStrokeWidth(2);
-                break;
-
-            case 2:
+            }
+            case 2 -> {
                 circle.setFill(Color.GREEN);
                 circle.setStroke(Color.GREEN);
-                circle.setStrokeWidth(2);
-                break;
-
-            case 3:
+            }
+            case 3 -> {
                 circle.setFill(Color.PINK);
                 circle.setStroke(Color.PINK);
-                circle.setStrokeWidth(2);
-                break;
-
-            case 4:
+            }
+            case 4 -> {
                 circle.setFill(Color.MEDIUMPURPLE);
                 circle.setStroke(Color.MEDIUMPURPLE);
-                circle.setStrokeWidth(2);
-                break;
-
-            case 5:
+            }
+            case 5 -> {
                 circle.setFill(Color.RED);
                 circle.setStroke(Color.RED);
-                circle.setStrokeWidth(2);
-                break;
-
-            case 6:
+            }
+            case 6 -> {
                 circle.setFill(Color.ORANGE);
                 circle.setStroke(Color.ORANGE);
-                circle.setStrokeWidth(2);
-                break;
-
-            default:
+            }
+            default -> {
                 circle.setFill(Color.GRAY);
                 circle.setStroke(Color.BLACK);
-                circle.setStrokeWidth(2);
-                break;
+            }
         }
-
+        circle.setStrokeWidth(2);
     }
 
-    private int calculateXPos(Node node) {
-        int nodeX = node.getX();
-        int nodeY = node.getY();
-        return 400 + (nodeX-4)*2*radius - nodeY*radius;
-    }
-
-    private int calculateYPos(Node node) {
-        int nodeY = node.getY();
-        return 100 + nodeY * 2 * radius;
-    }
-
+    /**
+     * Whenever the node's player changes, update the circle's color in real time.
+     */
     private void addNodeListener(Circle circle, Node node) {
         ChangeListener<Number> playerChangeListener = (observable, oldValue, newValue) -> {
             switch (newValue.intValue()) {
                 case 1 -> circle.setFill(Color.BLUE);
                 case 2 -> circle.setFill(Color.GREEN);
                 case 3 -> circle.setFill(Color.PINK);
-                case 4 -> circle.setFill(Color.LAVENDER);
+                case 4 -> circle.setFill(Color.MEDIUMPURPLE);
                 case 5 -> circle.setFill(Color.RED);
                 case 6 -> circle.setFill(Color.ORANGE);
                 default -> circle.setFill(Color.GRAY);
@@ -110,14 +104,32 @@ public class CircleManager {
         node.playerProperty().addListener(playerChangeListener);
     }
 
+    /**
+     * Show a tooltip "X:Y player: N" on hover, updating if the occupant changes.
+     */
     private void addTooltip(Circle circle, Node node) {
-        Tooltip tooltip = new Tooltip(node.getX()+":"+node.getY()+ " player: " + node.getPlayer());
+        Tooltip tooltip = new Tooltip(node.getX() + ":" + node.getY() + " player: " + node.getPlayer());
         Tooltip.install(circle, tooltip);
         tooltip.setShowDelay(javafx.util.Duration.seconds(0.5));
 
-        node.playerProperty().addListener((observable, oldValue, newValue) -> {
-            tooltip.setText(node.getX() + ":" + node.getY() + " player: " + newValue.intValue());
+        node.playerProperty().addListener((observable, oldVal, newVal) -> {
+            tooltip.setText(node.getX() + ":" + node.getY() + " player: " + newVal.intValue());
         });
+    }
+
+    /**
+     * For a standard 2D layout, e.g., offset from top-left.
+     */
+    private int calculateXPos(Node node) {
+        int nodeX = node.getX();
+        int nodeY = node.getY();
+        // This logic depends on how you want to visually place them
+        return 400 + (nodeX - 4) * 2 * radius - nodeY * radius;
+    }
+
+    private int calculateYPos(Node node) {
+        int nodeY = node.getY();
+        return 100 + nodeY * 2 * radius;
     }
 
     public List<Circle> getCircles() {
