@@ -2,12 +2,8 @@ package org.example.Client;
 
 import javafx.application.Application;
 
-/**
- * Entry point for the client application (GUI-based).
- */
-public class RunClient {
+public class RunClientGUI {
     public static void main(String[] args) {
-        // Launch the JavaFX GUI
         Application.launch(ClientGUI.class, args);
     }
 }
