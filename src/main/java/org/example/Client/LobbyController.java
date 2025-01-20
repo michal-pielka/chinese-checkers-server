@@ -165,12 +165,12 @@ public class LobbyController {
      * @param line The message from the server.
      */
     public void handleServerMessage(String line) {
+        serverMessagesArea.appendText(line + "\n");
+
         if (currentFlow == ClientFlow.IN_GAME && gameWindow != null) {
             gameWindow.handleServerMessage(line);
             return;
         }
-
-        serverMessagesArea.appendText(line + "\n");
 
         if (line.startsWith("Available Games:")) {
             games.clear();

@@ -106,7 +106,9 @@ public class SuperRules implements GameRules {
         String key1 = x1 + ":" + y1;
         String key2 = x2 + ":" + y2;
         Node node1, node2;
-
+        if(x1 == x2 && y1 == y2) {
+            return false;
+        }
         if(board.containsNode(key1) && board.containsNode(key2)) {
             node1 = board.getNode(key1);
             node2 = board.getNode(key2);

@@ -2,6 +2,7 @@ package org.example.Game.GUI;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import org.example.Game.Board.Board;
@@ -105,12 +106,6 @@ public class GameWindow {
                 updateLocalBoardMove(startPos, endPos);
             }
         }
-        else if (line.contains("Not your turn")) {
-            // Possibly show an alert or label
-        }
-        else if (line.contains("This move is not valid")) {
-            // Possibly show an alert
-        }
     }
 
     /**
@@ -173,12 +168,20 @@ public class GameWindow {
      * @param highlight Whether to apply highlight (true) or remove it (false).
      */
     private void highlightCircle(Circle circle, boolean highlight) {
+
         if (highlight) {
+            if (!circle.getProperties().containsKey("originalStroke")) {
+                circle.getProperties().put("originalStroke", circle.getStroke());
+                circle.getProperties().put("originalStrokeWidth", circle.getStrokeWidth());
+            }
+
             circle.setStroke(javafx.scene.paint.Color.YELLOW);
             circle.setStrokeWidth(3);
         } else {
-            circle.setStroke(circle.getFill());
-            circle.setStrokeWidth(2);
+            if (circle.getProperties().containsKey("originalStroke")) {
+                circle.setStroke((Color) circle.getProperties().get("originalStroke"));
+                circle.setStrokeWidth((double) circle.getProperties().get("originalStrokeWidth"));
+            }
         }
     }
 
