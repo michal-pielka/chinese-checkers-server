@@ -3,7 +3,7 @@ package org.Example.Game;
 import org.example.Game.Board.Board;
 import org.example.Game.Game;
 import org.example.Game.GameRules.GameRules;
-import org.example.Game.Player;
+import org.example.Game.Player.Player;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

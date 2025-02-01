@@ -49,6 +49,7 @@ public class SuperRules implements GameRules {
      * @param visited set of nodes already visited in the jump chain
      * @return a set of node keys (x:y) that are reachable via jumps
      */
+    @Override
     public Set<String> findJumps(Board board, int x, int y, Set<String> visited) {
         String currKey = x+":"+y;
         visited.add(currKey);

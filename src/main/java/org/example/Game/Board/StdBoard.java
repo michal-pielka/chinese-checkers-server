@@ -99,10 +99,10 @@ public class StdBoard implements Board {
      */
     private void setBases() {
         Collections.addAll(bases.get(0), "4:0", "4:1", "5:1", "4:2", "5:2", "6:2", "4:3", "5:3", "6:3", "7:3");
-        Collections.addAll(bases.get(1), "9:4", "10:4", "10:5", "11:4", "11:5", "11:6", "12:4", "12:5", "12:6", "12:7");
-        Collections.addAll(bases.get(2), "13:9", "13:10", "13:11", "13:12", "14:10", "14:11", "14:12", "15:11", "15:12", "16:12");
-        Collections.addAll(bases.get(3), "9:13", "10:13", "10:14", "11:13", "11:14", "11:15", "12:13", "12:14", "12:15", "12:16");
-        Collections.addAll(bases.get(4), "4:9", "4:10", "4:11", "4:12", "5:10", "5:11", "5:12", "6:11", "6:12", "7:12");
+        Collections.addAll(bases.get(1), "12:4","9:4", "10:4", "10:5", "11:4", "11:5", "11:6", "12:5", "12:6", "12:7");
+        Collections.addAll(bases.get(2), "16:12", "13:9", "13:10", "13:11", "13:12", "14:10", "14:11", "14:12", "15:11", "15:12");
+        Collections.addAll(bases.get(3), "12:16","9:13", "10:13", "10:14", "11:13", "11:14", "11:15", "12:13", "12:14", "12:15");
+        Collections.addAll(bases.get(4), "4:12", "4:9", "4:10", "4:11", "5:10", "5:11", "5:12", "6:11", "6:12", "7:12");
         Collections.addAll(bases.get(5), "0:4", "1:4", "1:5", "2:4", "2:5", "2:6", "3:4", "3:5", "3:6", "3:7");
     }
 
@@ -195,6 +195,15 @@ public class StdBoard implements Board {
     @Override
     public List<String> getTargetBase(int player) {
         int[] config = getTargetConfiguration();
+        return bases.get(config[player-1] - 1);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<String> getStartBase(int player) {
+        int[] config = getStartConfiguration();
         return bases.get(config[player-1] - 1);
     }
 

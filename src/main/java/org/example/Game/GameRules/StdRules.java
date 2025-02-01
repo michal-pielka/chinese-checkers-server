@@ -21,6 +21,7 @@ public class StdRules implements GameRules {
      * @param visited nodes already visited (new HashSet<> for default usage).
      * @return a set of node keys (x:y) that can be jumped to.
      */
+    @Override
     public Set<String> findJumps(Board board, int x, int y, Set<String> visited) {
         String currKey = x + ":" + y;
         visited.add(currKey);

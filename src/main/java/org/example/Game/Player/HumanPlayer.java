@@ -1,11 +1,11 @@
-package org.example.Game;
+package org.example.Game.Player;
 
 import java.io.PrintWriter;
 
 /**
  * Represents a player in the game.
  */
-public class Player {
+public class HumanPlayer implements Player{
 
     /**
      * A PrintWriter to send messages to this player.
@@ -23,7 +23,7 @@ public class Player {
      * @param name   the name of the player
      * @param writer the outputWriter for the player
      */
-    public Player(String name, PrintWriter writer) {
+    public HumanPlayer(String name, PrintWriter writer) {
         this.playerName = name;
         this.outputWriter = writer;
     }
@@ -42,6 +42,7 @@ public class Player {
      *
      * @return the name of the player
      */
+    @Override
     public String getName() {
         return playerName;
     }
@@ -51,6 +52,7 @@ public class Player {
      *
      * @param name the name of the player
      */
+    @Override
     public void setName(String name) {
         this.playerName = name;
     }

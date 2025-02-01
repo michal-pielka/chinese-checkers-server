@@ -1,6 +1,7 @@
 package org.example.Game.GameState;
 
 import org.example.Game.Game;
+import org.example.Game.Player.Player;
 
 /**
  * Represents the state of the game when it has ended.
@@ -43,7 +44,7 @@ public class GameOver implements GameState {
      * @param player the player to add
      */
     @Override
-    public void addPlayer(Game game, org.example.Game.Player player) {
+    public void addPlayer(Game game, Player player) {
         game.broadcastMessage("Cannot add players; the game is over.");
     }
 

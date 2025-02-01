@@ -2,6 +2,8 @@ package org.example.Game.GameRules;
 
 import org.example.Game.Board.Board;
 
+import java.util.Set;
+
 /**
  * Defines the rules for the game.
  * Implementations of this interface determine the validity of moves and check for winning conditions.
@@ -29,4 +31,15 @@ public interface GameRules {
      * @return true if the player has won, false otherwise.
      */
     boolean checkForWin(Board board, int player);
+
+    /**
+     * Finds all valid jump destinations from the given starting node.
+     *
+     * @param board the game board.
+     * @param x     X position of starting node.
+     * @param y     Y position of starting node
+     * @param visited nodes already visited (new HashSet<> for default usage).
+     * @return a set of node keys (x:y) that can be jumped to.
+     */
+    Set<String> findJumps(Board board, int x, int y, Set<String> visited);
 }

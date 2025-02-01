@@ -1,7 +1,7 @@
 package org.example.Game.GameState;
 
 import org.example.Game.Game;
-import org.example.Game.Player;
+import org.example.Game.Player.Player;
 
 /**
  * Represents the state of the game when waiting for players to join.

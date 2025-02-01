@@ -1,13 +1,12 @@
 package org.example.Server;
 
-import org.example.Game.Game;
 import org.example.Game.GameRules.GameRules;
 import org.example.Game.GameRules.StdRules;
 import org.example.Game.GameRules.SuperRules;
-import org.example.Game.Player;
+import org.example.Game.Player.HumanPlayer;
+import org.example.Game.Player.Player;
 import org.example.Server.States.UserState;
 import org.example.Server.States.LobbyState;
-import org.example.Server.States.InGameState;
 
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -36,7 +35,7 @@ public class UserSession {
     /**
      * The Player object associated with this session.
      */
-    private final Player player;
+    private final HumanPlayer player;
 
     /**
      * The user's current state (e.g., Lobby, InGame, etc.).
@@ -60,7 +59,7 @@ public class UserSession {
         this.outputWriter = outputWriter;
         this.inputReader = inputReader;
         this.state = new LobbyState(); // Initial state
-        this.player = new Player("defaultName", outputWriter);
+        this.player = new HumanPlayer("defaultName", outputWriter);
         this.active = true; // Session starts as active
     }
 

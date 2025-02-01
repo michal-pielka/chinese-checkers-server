@@ -2,6 +2,8 @@ package org.example.Game.GameState;
 
 import org.example.Game.Game;
 import org.example.Game.GameRules.GameRules;
+import org.example.Game.Player.BotPlayer;
+import org.example.Game.Player.Player;
 
 /**
  * Represents the state of the game when it is actively being played.
@@ -18,6 +20,11 @@ public class GameOn implements GameState {
         // Announce whose turn it is (by username)
         String currentPlayerName = game.getPlayers().get(game.getCurrentPlayer()).getName();
         game.broadcastMessage("It is " + currentPlayerName + "'s turn to move.");
+
+        Player player = game.getPlayers().get(game.getCurrentPlayer());
+        if(player instanceof BotPlayer) {
+            ((BotPlayer) player).makeMove();
+        }
     }
 
     /**
@@ -27,7 +34,7 @@ public class GameOn implements GameState {
      * @param player the player to add
      */
     @Override
-    public void addPlayer(Game game, org.example.Game.Player player) {
+    public void addPlayer(Game game, Player player) {
         System.out.println("Game is on. Cannot add player.");
     }
 

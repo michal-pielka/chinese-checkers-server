@@ -45,9 +45,18 @@ public interface Board {
      * Retrieves the target base for the specified player.
      *
      * @param player the 1-based player ID
-     * @return a list of node keys that represent the player's target base
+     * @return a list of node keys that represent the player's target base,
+     * key of the node furthest from the center should be at index 0.
      */
     List<String> getTargetBase(int player);
+
+    /**
+     * Retrieves the start base for the specified player.
+     *
+     * @param player the 1-based player ID
+     * @return a list of node keys that represent the player's start base
+     */
+    List<String> getStartBase(int player);
 
     /**
      * Determines if a given node key is within the target base of the specified player.

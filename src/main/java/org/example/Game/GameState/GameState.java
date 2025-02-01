@@ -1,7 +1,7 @@
 package org.example.Game.GameState;
 
 import org.example.Game.Game;
-import org.example.Game.Player;
+import org.example.Game.Player.Player;
 
 /**
  * Represents a state in the game lifecycle, defining behavior for adding players, making moves, and handling state transitions.

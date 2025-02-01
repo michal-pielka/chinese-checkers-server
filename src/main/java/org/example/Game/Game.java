@@ -4,6 +4,11 @@ import org.example.Game.Board.Board;
 import org.example.Game.GameRules.GameRules;
 import org.example.Game.GameState.GameState;
 import org.example.Game.GameState.WaitingForPlayers;
+import org.example.Game.Player.BotPlayer;
+import org.example.Game.Player.FirstBotPlayer;
+import org.example.Game.Player.HumanPlayer;
+import org.example.Game.Player.Player;
+
 import java.util.ArrayList;
 
 /**
@@ -54,7 +59,7 @@ public class Game {
      * @param board       the game board
      * @param rules       the rules of the game
      */
-    public Game(String name, int playerCount, Board board, GameRules rules) {
+    public Game(String name, int playerCount, Board board, GameRules rules, int bots) {
         this.lobbyName = name;
         this.maxPlayers = playerCount;
         players = new ArrayList<>();
@@ -62,6 +67,8 @@ public class Game {
         state = new WaitingForPlayers();
         this.rules = rules;
         currentPlayer = 0;
+
+        this.addBots(bots);
     }
 
     /**
@@ -137,13 +144,27 @@ public class Game {
     }
 
     /**
+     * Adds a bot player of type FirstBot.
+     */
+    public void addBots(int bots) {
+        for(int i=0; i<bots; i++) {
+            System.out.println("dodaje bota");
+            Player player = new FirstBotPlayer("Bot player " + players.size()+1, this, players.size()+1);
+            System.out.println("dodałem bota");
+            addPlayer(player);
+        }
+    }
+
+    /**
      * Sends a message to all players in the game.
      *
      * @param message the message to broadcast
      */
     public void broadcastMessage(String message) {
         for(Player player : players) {
-            player.sendMessage(message);
+            if(player instanceof HumanPlayer) {
+                ((HumanPlayer) player).sendMessage(message);
+            }
         }
     }
 
@@ -176,7 +197,9 @@ public class Game {
      */
     public void move(Player player, int x1, int y1, int x2, int y2) {
         if(players.get(currentPlayer) != player) {
-            player.sendMessage("Not your turn.");
+            if(player instanceof HumanPlayer) {
+                ((HumanPlayer) player).sendMessage("Not your turn.");
+            }
         }
         else {
             state.play(this, x1, y1, x2, y2);

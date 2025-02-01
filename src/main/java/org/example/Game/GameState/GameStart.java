@@ -1,6 +1,7 @@
 package org.example.Game.GameState;
 
 import org.example.Game.Game;
+import org.example.Game.Player.Player;
 
 import java.util.Random;
 
@@ -37,7 +38,7 @@ public class GameStart implements GameState {
      * @param player the player to add
      */
     @Override
-    public void addPlayer(Game game, org.example.Game.Player player) {
+    public void addPlayer(Game game, Player player) {
         // No more adding players once we've started
         game.broadcastMessage("Game is full. Cannot add new players.");
     }
