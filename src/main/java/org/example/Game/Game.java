@@ -149,7 +149,7 @@ public class Game {
     public void addBots(int bots) {
         for(int i=0; i<bots; i++) {
             System.out.println("dodaje bota");
-            Player player = new FirstBotPlayer("Bot player " + players.size()+1, this, players.size()+1);
+            Player player = new FirstBotPlayer("Bot player " + players.size(), this, players.size()+1);
             System.out.println("dodałem bota");
             addPlayer(player);
         }

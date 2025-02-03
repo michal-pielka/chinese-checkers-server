@@ -195,7 +195,9 @@ public class StdBoard implements Board {
     @Override
     public List<String> getTargetBase(int player) {
         int[] config = getTargetConfiguration();
+        System.out.println(player + " base: "+ config[player-1]);
         return bases.get(config[player-1] - 1);
+
     }
 
     /**

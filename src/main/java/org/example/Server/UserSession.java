@@ -213,6 +213,38 @@ public class UserSession {
     }
 
     /**
+     * Repeatedly prompts for the number of bots until a valid number 0<=x<players is provided.
+     *
+     * @param players number of players in the game.
+     * @return The chosen number of bots.
+     */
+    public int askForNumberOfBots(int players) {
+        int number = -1;
+        while (number < 0 || number >= players) {
+            sendMessage("Please input number of bots:");
+            if (inputReader.hasNextLine()) {
+                String response = inputReader.nextLine().trim();
+                try {
+                    number = Integer.parseInt(response);
+                    if (number < 0 || number >= players) {
+                        sendMessage("Invalid number of bots.");
+                        System.out.println("User " + player.getName() + " entered invalid number of bots: " + number);
+                    }
+                } catch (NumberFormatException e) {
+                    sendMessage("Invalid input. Please enter a numeric value.");
+                    System.out.println("User " + player.getName() + " entered non-numeric input for number of bots.");
+                }
+            } else {
+                // Fallback
+                sendMessage("No input detected. Defaulting to 0 bots.");
+                number = 0;
+                System.out.println("No input detected for number of bots. Defaulting to 0.");
+            }
+        }
+        return number;
+    }
+
+    /**
      * Repeatedly prompts for a player name until a non-empty name is provided.
      *
      * @return The chosen player name.

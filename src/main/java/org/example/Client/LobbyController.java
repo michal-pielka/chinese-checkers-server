@@ -81,6 +81,7 @@ public class LobbyController {
     private String createUsername;
     private String createLobbyName;
     private int createNumPlayers;
+    private int createNumBots;
     private String createVariant;
 
     private String joinUsername;
@@ -218,6 +219,9 @@ public class LobbyController {
             else if (line.contains("Please input number of players")) {
                 client.sendToServer(String.valueOf(createNumPlayers));
             }
+            else if(line.contains("Please input number of bots")){
+                client.sendToServer(String.valueOf(createNumBots));
+            }
             else if (line.contains("Please input 'Std'")) {
                 client.sendToServer(createVariant);
             }
@@ -282,10 +286,20 @@ public class LobbyController {
         playersBox.getItems().addAll(2,3,4,6);
         playersBox.setValue(2);
 
+        Label botsLabel = new Label("Number of Bots:");
+        Spinner<Integer> botsSpinner = new Spinner<>(0, playersBox.getValue() - 1, 0);
+        botsSpinner.setEditable(true);
+
         Label variantLabel = new Label("Variant:");
         ComboBox<String> variantBox = new ComboBox<>();
         variantBox.getItems().addAll("std","super");
         variantBox.setValue("std");
+
+        //Updating bots number after input on players number.
+        playersBox.setOnAction(e -> {
+            int maxBots = playersBox.getValue() - 1;
+            botsSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, maxBots, 0));
+        });
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
@@ -293,7 +307,9 @@ public class LobbyController {
         grid.add(userLabel, 0, 0);  grid.add(userField, 1, 0);
         grid.add(lobbyLabel, 0, 1); grid.add(lobbyField, 1, 1);
         grid.add(playersLabel, 0, 2); grid.add(playersBox, 1, 2);
-        grid.add(variantLabel, 0, 3); grid.add(variantBox, 1, 3);
+        grid.add(botsLabel, 0, 3); grid.add(botsSpinner, 1, 3);
+        grid.add(variantLabel, 0, 4); grid.add(variantBox, 1, 4);
+
 
         dialog.getDialogPane().setContent(grid);
 
@@ -305,6 +321,7 @@ public class LobbyController {
                 createUsername = userField.getText().trim();
                 createLobbyName = lobbyField.getText().trim();
                 createNumPlayers = playersBox.getValue();
+                createNumBots = botsSpinner.getValue();
                 createVariant = variantBox.getValue();
             }
             return null;

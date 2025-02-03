@@ -34,9 +34,10 @@ public class CreateCommand implements Command {
         }
 
         int maxPlayers = session.askForNumberOfPlayers();
+        int bots = session.askForNumberOfBots(maxPlayers);
         GameRules gameVariant = session.askForGameVariant();
 
-        Game game = new Game(lobbyName, maxPlayers, new StdBoard(maxPlayers), gameVariant, 2);
+        Game game = new Game(lobbyName, maxPlayers, new StdBoard(maxPlayers), gameVariant, bots);
         session.getServer().addGame(game);
 
         System.out.println("User " + session.getPlayer().getName() + " created game '" + lobbyName + "', max players: " + maxPlayers);

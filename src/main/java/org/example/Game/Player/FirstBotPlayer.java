@@ -29,33 +29,33 @@ public class FirstBotPlayer extends BotPlayer{
 
     @Override
     public void makeMove() {
-        boolean goodMove = false;
         String move="";
         String peg="";
 
-        while(!goodMove) {
+        for(int attempt=0; attempt<10; attempt++) {
             peg = getPegToMove();
             move = getTheBestMove(peg);
             if(move != null) {
-                goodMove = true;
+                int x1 = game.getBoard().getNode(peg).getX();
+                int y1 = game.getBoard().getNode(peg).getY();
+
+                try {
+                    String[] xy = move.split(":");
+                    int x = Integer.parseInt(xy[0]);
+                    int y = Integer.parseInt(xy[1]);
+
+                    game.getState().play(game, x1, y1, x, y);
+                    pegs.set(pegs.indexOf(peg), move);
+                    return;
+                }
+                catch(NumberFormatException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
-        int x1 = game.getBoard().getNode(peg).getX();
-        int y1 = game.getBoard().getNode(peg).getY();
-
-        try {
-            String[] xy = move.split(":");
-            int x = Integer.parseInt(xy[0]);
-            int y = Integer.parseInt(xy[1]);
-
-            game.getState().play(game, x1, y1, x, y);
-            pegs.set(pegs.indexOf(peg), move);
-        }
-        catch(NumberFormatException e) {
-            e.printStackTrace();
-        }
-
+        //illegal move to skip turn
+        game.getState().play(game, 0, 0, 0, 0);
     }
 
     private Node getFurthestNode() {
@@ -109,18 +109,21 @@ public class FirstBotPlayer extends BotPlayer{
         }
 
         for(Node neighbour : currNode.neighbours) {
-            jumpX = neighbour.getX();
-            jumpY = neighbour.getY();
-            dist = distance(jumpX, jumpY);
-            if(min > dist) {
-                min = dist;
-                minCoords = jumpX +":"+jumpY;
+            if(neighbour.getPlayer() == 0) {
+                jumpX = neighbour.getX();
+                jumpY = neighbour.getY();
+                dist = distance(jumpX, jumpY);
+                if(min > dist) {
+                    min = dist;
+                    minCoords = jumpX +":"+jumpY;
+                }
             }
         }
 
         if(min < distance(x,y)) {
             return minCoords;
         }
+
         return null;
     }
 }
